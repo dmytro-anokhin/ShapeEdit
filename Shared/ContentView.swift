@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+
     @Binding var document: ShapeEditDocument
 
     var body: some View {
-        EmptyView()
+        CanvasViewPort(document: document)
     }
 }
 

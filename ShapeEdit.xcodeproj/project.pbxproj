@@ -19,6 +19,12 @@
 		F44D541326AA040000A757FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F44D53E526AA040000A757FB /* Assets.xcassets */; };
 		F44D542326AA0A2F00A757FB /* Graphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542226AA0A2E00A757FB /* Graphic.swift */; };
 		F44D542426AA0A2F00A757FB /* Graphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542226AA0A2E00A757FB /* Graphic.swift */; };
+		F44D542A26AA95FE00A757FB /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542926AA95FE00A757FB /* CanvasView.swift */; };
+		F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542926AA95FE00A757FB /* CanvasView.swift */; };
+		F44D542E26AA987600A757FB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542D26AA987600A757FB /* Utilities.swift */; };
+		F44D542F26AA987600A757FB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542D26AA987600A757FB /* Utilities.swift */; };
+		F44D543126AA9C6100A757FB /* CanvasViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D543026AA9C6100A757FB /* CanvasViewPort.swift */; };
+		F44D543226AA9C6100A757FB /* CanvasViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D543026AA9C6100A757FB /* CanvasViewPort.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +61,9 @@
 		F44D540926AA040000A757FB /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		F44D540B26AA040000A757FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F44D542226AA0A2E00A757FB /* Graphic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphic.swift; sourceTree = "<group>"; };
+		F44D542926AA95FE00A757FB /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		F44D542D26AA987600A757FB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		F44D543026AA9C6100A757FB /* CanvasViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewPort.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,11 +113,11 @@
 		F44D53E126AA03FE00A757FB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F44D542C26AA985F00A757FB /* Model */,
+				F44D542826AA95F000A757FB /* CanvasView */,
 				F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */,
-				F44D53E326AA03FE00A757FB /* ShapeEditDocument.swift */,
 				F44D53E426AA03FE00A757FB /* ContentView.swift */,
 				F44D53E526AA040000A757FB /* Assets.xcassets */,
-				F44D542226AA0A2E00A757FB /* Graphic.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -157,6 +166,25 @@
 				F44D540B26AA040000A757FB /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		F44D542826AA95F000A757FB /* CanvasView */ = {
+			isa = PBXGroup;
+			children = (
+				F44D542926AA95FE00A757FB /* CanvasView.swift */,
+				F44D543026AA9C6100A757FB /* CanvasViewPort.swift */,
+				F44D542D26AA987600A757FB /* Utilities.swift */,
+			);
+			path = CanvasView;
+			sourceTree = "<group>";
+		};
+		F44D542C26AA985F00A757FB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F44D53E326AA03FE00A757FB /* ShapeEditDocument.swift */,
+				F44D542226AA0A2E00A757FB /* Graphic.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,9 +344,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44D542E26AA987600A757FB /* Utilities.swift in Sources */,
 				F44D540E26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */,
+				F44D542A26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542326AA0A2F00A757FB /* Graphic.swift in Sources */,
+				F44D543126AA9C6100A757FB /* CanvasViewPort.swift in Sources */,
 				F44D541026AA040000A757FB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,9 +358,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F44D542F26AA987600A757FB /* Utilities.swift in Sources */,
 				F44D540F26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F44D540D26AA040000A757FB /* ShapeEditApp.swift in Sources */,
+				F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542426AA0A2F00A757FB /* Graphic.swift in Sources */,
+				F44D543226AA9C6100A757FB /* CanvasViewPort.swift in Sources */,
 				F44D541126AA040000A757FB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
