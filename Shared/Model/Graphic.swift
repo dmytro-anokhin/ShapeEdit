@@ -49,5 +49,11 @@ extension Graphic {
         case green
 
         case blue
+
+        case cyan
+
+        case magenta
+
+        case yellow
     }
 }
