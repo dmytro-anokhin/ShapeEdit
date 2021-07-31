@@ -14,6 +14,5 @@ struct CanvasViewPort: View {
 
     var body: some View {
         CanvasView(graphics: $document.graphics)
-            .frame(minWidth: 800.0, minHeight: 600.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }

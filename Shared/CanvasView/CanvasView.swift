@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AdvancedScrollView
 
 
 struct CanvasView: View {
@@ -19,12 +20,17 @@ struct CanvasView: View {
 //    }
 
     var body: some View {
-        canvas
-            .aspectRatio(canvasSize.width / canvasSize.height, contentMode: .fit)
+        AdvancedScrollView { proxy in
+            canvas
+                .frame(width: canvasSize.width, height: canvasSize.height)
+        }
     }
 
     @ViewBuilder var canvas: some View {
         ZStack(alignment: .topLeading) {
+            
+            GridView(size: canvasSize)
+
             ForEach($graphics) { graphic in
                 makeTreeView(root: graphic.wrappedValue)
             }
@@ -38,7 +44,7 @@ struct CanvasView: View {
     }
 
     @ViewBuilder func makeView(_ graphic: Graphic) -> some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             switch graphic.content {
                 case .rect:
                     Rectangle()
@@ -53,7 +59,8 @@ struct CanvasView: View {
                         .fill(graphic.fill.color)
             }
         }
-        .frame(width: graphic.size.width, height: graphic.size.height, alignment: .center)
-        .position(graphic.offset)
+        .frame(width: graphic.size.width, height: graphic.size.height)
+        .position(x: graphic.offset.x + graphic.size.width * 0.5,
+                  y: graphic.offset.y + graphic.size.height * 0.5)
     }
 }
