@@ -72,7 +72,6 @@
 		F44D542926AA95FE00A757FB /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		F44D542D26AA987600A757FB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		F4ED8A1A26B48916004E7307 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
-		F4ED8A1D26B5381D004E7307 /* advanced-scrollview */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "advanced-scrollview"; path = "../advanced-scrollview"; sourceTree = "<group>"; };
 		F4ED8A1F26B80123004E7307 /* NavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorView.swift; sourceTree = "<group>"; };
 		F4ED8A2226B8306E004E7307 /* GraphicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicShapeView.swift; sourceTree = "<group>"; };
 		F4ED8A2526B85276004E7307 /* Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selection.swift; sourceTree = "<group>"; };
@@ -115,7 +114,6 @@
 		F44D53DC26AA03FD00A757FB = {
 			isa = PBXGroup;
 			children = (
-				F4ED8A1D26B5381D004E7307 /* advanced-scrollview */,
 				F44D53E126AA03FE00A757FB /* Shared */,
 				F44D53EC26AA040000A757FB /* iOS */,
 				F44D53F326AA040000A757FB /* macOS */,
