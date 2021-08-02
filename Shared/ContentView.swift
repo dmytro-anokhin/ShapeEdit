@@ -17,6 +17,7 @@ struct ContentView: View {
         #if os(macOS)
         HSplitView {
             NavigatorView(graphics: document.graphics, selection: $selection)
+                .frame(width: 200.0)
             CanvasView(graphics: $document.graphics, selection: $selection)
         }
         #else
