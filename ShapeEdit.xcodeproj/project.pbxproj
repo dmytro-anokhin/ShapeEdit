@@ -27,6 +27,8 @@
 		F4ED8A1926B46C02004E7307 /* AdvancedScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F4ED8A1826B46C02004E7307 /* AdvancedScrollView */; };
 		F4ED8A1B26B48916004E7307 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED8A1A26B48916004E7307 /* GridView.swift */; };
 		F4ED8A1C26B48916004E7307 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED8A1A26B48916004E7307 /* GridView.swift */; };
+		F4ED8A2026B80123004E7307 /* NavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED8A1F26B80123004E7307 /* NavigatorView.swift */; };
+		F4ED8A2126B80123004E7307 /* NavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED8A1F26B80123004E7307 /* NavigatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,7 @@
 		F44D542D26AA987600A757FB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		F4ED8A1A26B48916004E7307 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		F4ED8A1D26B5381D004E7307 /* advanced-scrollview */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "advanced-scrollview"; path = "../advanced-scrollview"; sourceTree = "<group>"; };
+		F4ED8A1F26B80123004E7307 /* NavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,7 @@
 		F44D53E126AA03FE00A757FB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F4ED8A1E26B800C5004E7307 /* Auxiliary */,
 				F44D542C26AA985F00A757FB /* Model */,
 				F44D542826AA95F000A757FB /* CanvasView */,
 				F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */,
@@ -199,6 +203,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F4ED8A1E26B800C5004E7307 /* Auxiliary */ = {
+			isa = PBXGroup;
+			children = (
+				F4ED8A1F26B80123004E7307 /* NavigatorView.swift */,
+			);
+			path = Auxiliary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,6 +383,7 @@
 				F44D540E26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F4ED8A1B26B48916004E7307 /* GridView.swift in Sources */,
 				F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */,
+				F4ED8A2026B80123004E7307 /* NavigatorView.swift in Sources */,
 				F44D542A26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542326AA0A2F00A757FB /* Graphic.swift in Sources */,
 				F44D541026AA040000A757FB /* ContentView.swift in Sources */,
@@ -385,6 +398,7 @@
 				F44D540F26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F4ED8A1C26B48916004E7307 /* GridView.swift in Sources */,
 				F44D540D26AA040000A757FB /* ShapeEditApp.swift in Sources */,
+				F4ED8A2126B80123004E7307 /* NavigatorView.swift in Sources */,
 				F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542426AA0A2F00A757FB /* Graphic.swift in Sources */,
 				F44D541126AA040000A757FB /* ContentView.swift in Sources */,

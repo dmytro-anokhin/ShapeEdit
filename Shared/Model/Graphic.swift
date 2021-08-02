@@ -6,15 +6,18 @@
 //
 
 import CoreGraphics
+import Foundation
 
 
 struct Graphic: Hashable, Codable, Identifiable {
 
     var id: String
 
+    var name: String
+
     var content: Content
 
-    var children: [Graphic] = []
+    var children: [Graphic]?
 
     var fill: Fill
 
@@ -55,5 +58,57 @@ extension Graphic {
         case magenta
 
         case yellow
+    }
+}
+
+
+extension Graphic {
+
+    static var test: [Graphic] {
+        [
+            Graphic(id: UUID().uuidString,
+                    name: "Rectangle",
+                    content: .rect,
+                    children: [
+                        Graphic(id: UUID().uuidString,
+                                name: "Rectangle",
+                                content: .rect,
+                                children: nil,
+                                fill: .red,
+                                offset: CGPoint(x: 425.0, y: 125.0),
+                                size: CGSize(width: 50.0, height: 50.0)),
+                        Graphic(id: UUID().uuidString,
+                                name: "Triangle",
+                                content: .triangle,
+                                children: nil,
+                                fill: .green,
+                                offset: CGPoint(x: 450.0, y: 110.0),
+                                size: CGSize(width: 50.0, height: 50.0)),
+                        Graphic(id: UUID().uuidString,
+                                name: "Circle",
+                                content: .circle,
+                                children: nil,
+                                fill: .blue,
+                                offset: CGPoint(x: 400.0, y: 100.0),
+                                size: CGSize(width: 50.0, height: 50.0))
+                    ],
+                    fill: .cyan,
+                    offset: CGPoint(x: 400.0, y: 100.0),
+                    size: CGSize(width: 200.0, height: 200.0)),
+            Graphic(id: UUID().uuidString,
+                    name: "Triangle",
+                    content: .triangle,
+                    children: nil,
+                    fill: .magenta,
+                    offset: CGPoint(x: 550.0, y: 200.0),
+                    size: CGSize(width: 300.0, height: 200.0)),
+            Graphic(id: UUID().uuidString,
+                    name: "Circle",
+                    content: .circle,
+                    children: nil,
+                    fill: .yellow,
+                    offset: CGPoint(x: 300.0, y: 300.0),
+                    size: CGSize(width: 250.0, height: 250.0))
+        ]
     }
 }

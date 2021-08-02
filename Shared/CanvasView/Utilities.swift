@@ -30,7 +30,10 @@ extension Graphic {
         while !queue.isEmpty {
             let graphic = queue.removeFirst()
             result.append(graphic)
-            queue.append(contentsOf: graphic.children)
+
+            if let children = graphic.children {
+                queue.append(contentsOf: children)
+            }
         }
 
         return result
@@ -60,7 +63,7 @@ extension Graphic.Fill {
 extension Graphic {
 
     func hitTest(_ point: CGPoint) -> Graphic? {
-        if let child = children.hitTest(point) {
+        if let children = children, let child = children.hitTest(point) {
             return child
         }
 
@@ -90,7 +93,12 @@ extension Array where Element == Graphic {
 
             while counter > 0 {
                 var element = removeFirst()
-                element.children.update(id, change: change)
+
+                if var children = element.children {
+                    children.update(id, change: change)
+                    element.children = children
+                }
+
                 append(element)
                 counter -= 1
             }

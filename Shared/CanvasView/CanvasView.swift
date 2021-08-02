@@ -15,10 +15,6 @@ struct CanvasView: View {
 
     @State var canvasSize = CGSize(width: 1920.0, height: 1080.0)
 
-//    private var graphicsCollection: BindingCollection<[Graphic]> {
-//        BindingCollection(base: $graphics)
-//    }
-
     @State private var dragInfo: DragInfo? = nil
 
     private struct DragInfo {

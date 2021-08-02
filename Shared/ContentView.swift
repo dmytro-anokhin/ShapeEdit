@@ -12,7 +12,14 @@ struct ContentView: View {
     @Binding var document: ShapeEditDocument
 
     var body: some View {
+        #if os(macOS)
+        HSplitView {
+            NavigatorView(graphics: document.graphics)
+            CanvasView(graphics: $document.graphics)
+        }
+        #else
         CanvasView(graphics: $document.graphics)
+        #endif
     }
 }
 
