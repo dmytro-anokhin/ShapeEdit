@@ -13,13 +13,13 @@ struct CanvasView: View {
 
     @Binding var graphics: [Graphic]
 
+    @Binding var selection: Set<String>
+
     @State var canvasSize = CGSize(width: 1920.0, height: 1080.0)
 
     @State private var dragInfo: DragInfo? = nil
 
     private struct DragInfo {
-
-        var selection: Graphic
 
         var translation: CGSize
     }
@@ -29,23 +29,23 @@ struct CanvasView: View {
             canvas
                 .frame(width: canvasSize.width, height: canvasSize.height)
         }.onTapContentGesture { location, proxy in
-            guard let graphic = graphics.hitTest(location) else {
-                return
-            }
+            selection.removeAll()
 
-            print("\(graphic.content) \(graphic.id)")
+            if let graphic = graphics.hitTest(location) {
+                selection.formUnion(graphic.flatten.map({ $0.id }))
+            }
         }
         .onDragContentGesture { phase, location, translation, proxy in
             switch phase {
                 case .possible:
-                    return graphics.hitTest(location) != nil
-
-                case .began:
                     guard let graphic = graphics.hitTest(location) else {
                         return false
                     }
 
-                    dragInfo = DragInfo(selection: graphic, translation: translation)
+                    return selection.contains(graphic.id)
+
+                case .began:
+                    dragInfo = DragInfo(translation: translation)
 
                 case .changed:
                     dragInfo?.translation = translation
@@ -55,9 +55,11 @@ struct CanvasView: View {
 
                 case .ended:
                     if let dragInfo = dragInfo {
-                        graphics.update(dragInfo.selection.id) { graphic in
-                            graphic.offset = CGPoint(x: graphic.offset.x + dragInfo.translation.width,
-                                                     y: graphic.offset.y + dragInfo.translation.height)
+                        for id in selection {
+                            graphics.update(id) { graphic in
+                                graphic.offset = CGPoint(x: graphic.offset.x + dragInfo.translation.width,
+                                                         y: graphic.offset.y + dragInfo.translation.height)
+                            }
                         }
                     }
 
@@ -87,18 +89,11 @@ struct CanvasView: View {
 
     @ViewBuilder func makeView(_ graphic: Graphic) -> some View {
         ZStack(alignment: .topLeading) {
-            switch graphic.content {
-                case .rect:
-                    Rectangle()
-                        .fill(graphic.fill.color)
-
-                case .triangle:
-                    Triangle()
-                        .fill(graphic.fill.color)
-
-                case .circle:
-                    Circle()
-                        .fill(graphic.fill.color)
+            if selection.contains(graphic.id) {
+                GraphicShapeView(graphic: graphic)
+                    .border(Color.blue)
+            } else {
+                GraphicShapeView(graphic: graphic)
             }
         }
         .frame(width: graphic.size.width, height: graphic.size.height)
@@ -109,7 +104,7 @@ struct CanvasView: View {
         var position = CGPoint(x: graphic.offset.x + graphic.size.width * 0.5,
                                y: graphic.offset.y + graphic.size.height * 0.5)
 
-        if let dragInfo = dragInfo, graphic.id == dragInfo.selection.id {
+        if let dragInfo = dragInfo, selection.contains(graphic.id) {
             position.x += dragInfo.translation.width
             position.y += dragInfo.translation.height
         }

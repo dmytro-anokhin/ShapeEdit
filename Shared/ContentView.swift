@@ -11,11 +11,13 @@ struct ContentView: View {
 
     @Binding var document: ShapeEditDocument
 
+    @State var selection: Set<String> = []
+
     var body: some View {
         #if os(macOS)
         HSplitView {
-            NavigatorView(graphics: document.graphics)
-            CanvasView(graphics: $document.graphics)
+            NavigatorView(graphics: document.graphics, selection: $selection)
+            CanvasView(graphics: $document.graphics, selection: $selection)
         }
         #else
         CanvasView(graphics: $document.graphics)

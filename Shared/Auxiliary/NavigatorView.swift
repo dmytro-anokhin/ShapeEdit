@@ -12,37 +12,36 @@ struct NavigatorView: View {
 
     var graphics: [Graphic]
 
+    @Binding var selection: Set<String>
+
     var body: some View {
-        List(graphics, children: \.children) { graphic in
-            HStack {
-                GraphicContentView(graphic: graphic)
-                    .aspectRatio(1.0, contentMode: .fit)
-                    .frame(maxHeight: 17.0)
-                Text(graphic.name)
+        List(selection: $selection) {
+            OutlineGroup(graphics, children: \.children) {
+                GraphicRow($0)
             }
+
         }
         .listStyle(.sidebar)
     }
 }
 
+extension NavigatorView {
 
-struct GraphicContentView: View {
+    struct GraphicRow: View {
 
-    var graphic: Graphic
+        var graphic: Graphic
 
-    var body: some View {
-        switch graphic.content {
-            case .rect:
-                Rectangle()
-                    .fill(graphic.fill.color)
+        init(_ graphic: Graphic) {
+            self.graphic = graphic
+        }
 
-            case .triangle:
-                Triangle()
-                    .fill(graphic.fill.color)
-
-            case .circle:
-                Circle()
-                    .fill(graphic.fill.color)
+        var body: some View {
+            HStack {
+                GraphicShapeView(graphic: graphic)
+                    .aspectRatio(1.0, contentMode: .fit)
+                    .frame(maxHeight: 17.0)
+                Text(graphic.name)
+            }.padding(.leading, 8.0)
         }
     }
 }
@@ -50,6 +49,6 @@ struct GraphicContentView: View {
 
 struct NavigatorView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigatorView(graphics: Graphic.test)
+        NavigatorView(graphics: Graphic.test, selection: .constant([]))
     }
 }
