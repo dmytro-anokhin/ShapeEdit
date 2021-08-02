@@ -23,8 +23,6 @@
 		F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542926AA95FE00A757FB /* CanvasView.swift */; };
 		F44D542E26AA987600A757FB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542D26AA987600A757FB /* Utilities.swift */; };
 		F44D542F26AA987600A757FB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542D26AA987600A757FB /* Utilities.swift */; };
-		F44D543126AA9C6100A757FB /* CanvasViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D543026AA9C6100A757FB /* CanvasViewPort.swift */; };
-		F44D543226AA9C6100A757FB /* CanvasViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D543026AA9C6100A757FB /* CanvasViewPort.swift */; };
 		F4ED8A1626B46BEF004E7307 /* AdvancedScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F4ED8A1526B46BEF004E7307 /* AdvancedScrollView */; };
 		F4ED8A1926B46C02004E7307 /* AdvancedScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F4ED8A1826B46C02004E7307 /* AdvancedScrollView */; };
 		F4ED8A1B26B48916004E7307 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED8A1A26B48916004E7307 /* GridView.swift */; };
@@ -67,8 +65,8 @@
 		F44D542226AA0A2E00A757FB /* Graphic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphic.swift; sourceTree = "<group>"; };
 		F44D542926AA95FE00A757FB /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		F44D542D26AA987600A757FB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		F44D543026AA9C6100A757FB /* CanvasViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewPort.swift; sourceTree = "<group>"; };
 		F4ED8A1A26B48916004E7307 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		F4ED8A1D26B5381D004E7307 /* advanced-scrollview */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "advanced-scrollview"; path = "../advanced-scrollview"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +106,7 @@
 		F44D53DC26AA03FD00A757FB = {
 			isa = PBXGroup;
 			children = (
+				F4ED8A1D26B5381D004E7307 /* advanced-scrollview */,
 				F44D53E126AA03FE00A757FB /* Shared */,
 				F44D53EC26AA040000A757FB /* iOS */,
 				F44D53F326AA040000A757FB /* macOS */,
@@ -180,7 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				F44D542926AA95FE00A757FB /* CanvasView.swift */,
-				F44D543026AA9C6100A757FB /* CanvasViewPort.swift */,
 				F44D542D26AA987600A757FB /* Utilities.swift */,
 				F4ED8A1A26B48916004E7307 /* GridView.swift */,
 			);
@@ -375,7 +373,6 @@
 				F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */,
 				F44D542A26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542326AA0A2F00A757FB /* Graphic.swift in Sources */,
-				F44D543126AA9C6100A757FB /* CanvasViewPort.swift in Sources */,
 				F44D541026AA040000A757FB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,7 +387,6 @@
 				F44D540D26AA040000A757FB /* ShapeEditApp.swift in Sources */,
 				F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542426AA0A2F00A757FB /* Graphic.swift in Sources */,
-				F44D543226AA9C6100A757FB /* CanvasViewPort.swift in Sources */,
 				F44D541126AA040000A757FB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

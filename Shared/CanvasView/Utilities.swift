@@ -56,3 +56,50 @@ extension Graphic.Fill {
         }
     }
 }
+
+extension Graphic {
+
+    func hitTest(_ point: CGPoint) -> Graphic? {
+        if let child = children.hitTest(point) {
+            return child
+        }
+
+        let rect = CGRect(origin: offset, size: size)
+        return rect.contains(point) ? self : nil
+    }
+}
+
+extension Sequence where Element == Graphic {
+
+    func hitTest(_ point: CGPoint) -> Graphic? {
+        for element in self.reversed() {
+            if let result = element.hitTest(point) {
+                return result
+            }
+        }
+
+        return nil
+    }
+}
+
+extension Array where Element == Graphic {
+
+    mutating func update(_ id: String, change: (_ graphic: inout Graphic) -> Void) {
+        guard let index = firstIndex(where: { $0.id == id }) else {
+            var counter = count
+
+            while counter > 0 {
+                var element = removeFirst()
+                element.children.update(id, change: change)
+                append(element)
+                counter -= 1
+            }
+
+            return
+        }
+
+        var element = self[index]
+        change(&element)
+        self[index] = element
+    }
+}

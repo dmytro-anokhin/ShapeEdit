@@ -12,7 +12,7 @@ struct ContentView: View {
     @Binding var document: ShapeEditDocument
 
     var body: some View {
-        CanvasViewPort(document: document)
+        CanvasView(graphics: $document.graphics)
     }
 }
 
