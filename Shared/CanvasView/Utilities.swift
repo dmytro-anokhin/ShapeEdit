@@ -40,6 +40,7 @@ extension Graphic {
     }
 }
 
+
 extension Graphic.Fill {
 
     var color: Color {
@@ -62,21 +63,22 @@ extension Graphic.Fill {
 
 extension Graphic {
 
-    func hitTest(_ point: CGPoint) -> Graphic? {
+    func hitTest(_ point: CGPoint, extendBy delta: CGFloat = 0.0) -> Graphic? {
         if let children = children, let child = children.hitTest(point) {
             return child
         }
 
         let rect = CGRect(origin: offset, size: size)
+            // .insetBy(dx: -delta, dy: -delta)
         return rect.contains(point) ? self : nil
     }
 }
 
 extension Sequence where Element == Graphic {
 
-    func hitTest(_ point: CGPoint) -> Graphic? {
+    func hitTest(_ point: CGPoint, extendBy delta: CGFloat = 0.0) -> Graphic? {
         for element in self.reversed() {
-            if let result = element.hitTest(point) {
+            if let result = element.hitTest(point, extendBy: delta) {
                 return result
             }
         }
@@ -109,5 +111,12 @@ extension Array where Element == Graphic {
         var element = self[index]
         change(&element)
         self[index] = element
+    }
+}
+
+extension View {
+
+    func frame(size: CGSize) -> some View {
+        self.frame(width: size.width, height: size.height)
     }
 }
