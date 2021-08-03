@@ -90,8 +90,9 @@ struct CanvasView: View {
     @ViewBuilder func makeView(_ graphic: Graphic) -> some View {
         ZStack(alignment: .topLeading) {
             if selection.contains(graphic.id) {
-                GraphicShapeView(graphic: graphic)
-                    .border(Color.blue)
+                SelectionView {
+                    GraphicShapeView(graphic: graphic)
+                }
             } else {
                 GraphicShapeView(graphic: graphic)
             }
