@@ -21,7 +21,7 @@ struct ContentView: View {
             CanvasView(graphics: $document.graphics, selection: $selection)
         }
         #else
-        CanvasView(graphics: $document.graphics)
+        CanvasView(graphics: $document.graphics, selection: $selection)
         #endif
     }
 }
