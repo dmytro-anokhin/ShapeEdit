@@ -7,30 +7,109 @@
 
 import SwiftUI
 
-struct SelectionView<Content: View>: View {
+
+struct SelectionProxy: Hashable, Identifiable {
+
+    var graphic: Graphic
 
     var radius: CGFloat = 5.0
 
-    var content: Content
+    var translation: CGSize = .zero
 
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
+    var graphicBounds: CGRect {
+        CGRect(origin: .zero, size: graphic.size)
+    }
+
+    var graphicFrame: CGRect {
+        CGRect(origin: graphic.offset, size: graphic.size)
+    }
+
+    var selectionBounds: CGRect {
+        CGRect(origin: .zero, size: graphic.size)
+            .insetBy(dx: -radius, dy: -radius)
+    }
+
+    var selectionFrame: CGRect {
+        CGRect(origin: graphic.offset, size: graphic.size)
+            .insetBy(dx: -radius, dy: -radius)
+    }
+
+    var position: CGPoint {
+        CGPoint(x: graphicFrame.minX + graphicBounds.width * 0.5,
+                y: graphicFrame.minY + graphicBounds.height * 0.5)
+    }
+
+    var selectionPosition: CGPoint {
+        CGPoint(x: selectionFrame.minX + selectionFrame.width * 0.5,
+                y: selectionFrame.minY + selectionFrame.height * 0.5)
+    }
+
+    func rect(direction: Direction) -> CGRect {
+
+        let size = CGSize(width: radius * 2.0, height: radius * 2.0)
+        let origin: CGPoint
+
+        switch direction {
+            case .top:
+                origin = CGPoint(x: graphicBounds.midX - radius, y: graphicBounds.minY - radius)
+            case .topLeft:
+                origin = CGPoint(x: graphicBounds.minX - radius, y: graphicBounds.minY - radius)
+            case .left:
+                origin = CGPoint(x: graphicBounds.minX - radius, y: graphicBounds.midY - radius)
+            case .bottomLeft:
+                origin = CGPoint(x: graphicBounds.minX - radius, y: graphicBounds.maxY - radius)
+            case .bottom:
+                origin = CGPoint(x: graphicBounds.midX - radius, y: graphicBounds.maxY - radius)
+            case .bottomRight:
+                origin = CGPoint(x: graphicBounds.maxX - radius, y: graphicBounds.maxY - radius)
+            case .right:
+                origin = CGPoint(x: graphicBounds.maxX - radius, y: graphicBounds.midY - radius)
+            case .topRight:
+                origin = CGPoint(x: graphicBounds.maxX - radius, y: graphicBounds.minY - radius)
+        }
+
+        return CGRect(origin: origin, size: size)
+    }
+
+    func hitTest(_ location: CGPoint) -> Direction? {
+        nil
+    }
+
+    // MARK: - Hashable
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(graphic)
+    }
+
+    // MARK: - Identifiable
+
+    var id: String {
+        graphic.id
+    }
+}
+
+struct SelectionView: View {
+
+    var proxy: SelectionProxy
+
+    init(proxy: SelectionProxy) {
+        self.proxy = proxy
     }
 
     var body: some View {
-        content
-            .overlay(
-                GeometryReader { geometry in
-                    ZStack {
-                        SelectionBorder(radius: radius)
-                            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                            .foregroundColor(Color.blue)
-                        SelectionDots(radius: radius)
-                            .fill(Color.blue)
-                    }
-                    .frame(width: geometry.size.width + radius * 2.0,
-                           height: geometry.size.height + radius * 2.0)
-                }.offset(x: -radius, y: -radius))
+        ZStack(alignment: .center) {
+            SelectionBorder(radius: proxy.radius)
+                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                .foregroundColor(Color.blue)
+
+            SelectionControls(controls: Direction.allCases.map { proxy.rect(direction: $0) })
+                .fill(Color.white)
+                .offset(x: proxy.radius, y: proxy.radius)
+
+            SelectionControls(controls: Direction.allCases.map { proxy.rect(direction: $0) })
+                .stroke(Color.blue)
+                .offset(x: proxy.radius, y: proxy.radius)
+        }
     }
 }
 
@@ -92,40 +171,16 @@ struct SelectionBorder: Shape {
     }
 }
 
-struct SelectionDots: Shape {
+struct SelectionControls: Shape {
 
-    var radius: CGFloat
+    var controls: [CGRect] = []
 
     func path(in rect: CGRect) -> Path {
 
-        let diameter = radius * 2.0
-
-        let dots: [CGPoint] = [
-            // Top-left
-            CGPoint(x: rect.minX, y: rect.minY),
-            // Top-middle
-            CGPoint(x: rect.midX - radius, y: rect.minY),
-            // Top-right
-            CGPoint(x: rect.maxX - diameter, y: rect.minY),
-            // Middle-right
-            CGPoint(x: rect.maxX - diameter, y: rect.midY - radius),
-            // Bottom-right
-            CGPoint(x: rect.maxX - diameter, y: rect.maxY - diameter),
-            // Bottom-middle
-            CGPoint(x: rect.midX - radius, y: rect.maxY - diameter),
-            // Bottom-left
-            CGPoint(x: rect.minX, y: rect.maxY - diameter),
-            // Middle-left
-            CGPoint(x: rect.minX, y: rect.midY - radius)
-        ]
-
         var path = Path()
 
-        let dotSize = CGSize(width: diameter, height: diameter)
-
-        for dotOrigin in dots {
-            let dotRect = CGRect(origin: dotOrigin, size: dotSize)
-            path.addEllipse(in: dotRect)
+        for control in controls {
+            path.addEllipse(in: control)
         }
 
         return path
@@ -136,16 +191,30 @@ struct SelectionView_Previews: PreviewProvider {
     static var previews: some View {
         let graphic = Graphic(id: "",
                               name: "",
-                              content: .circle,
+                              content: .ellipse,
                               children: nil,
                               fill: .yellow,
-                              offset: .zero,
-                              size: CGSize(width: 100.0, height: 100.0))
+                              offset: CGPoint(x: 100.0, y: 100.0),
+                              size: CGSize(width: 100.0, height: 150.0))
 
-        SelectionView {
+        let proxy = SelectionProxy(graphic: graphic)
+
+        ZStack(alignment: .topLeading) {
             GraphicShapeView(graphic: graphic)
-                .frame(width: graphic.size.width, height: graphic.size.height)
+                .frame(width: proxy.graphicBounds.width,
+                       height: proxy.graphicBounds.height)
+                .position(x: proxy.position.x,
+                          y: proxy.position.y)
+
+            SelectionView(proxy: proxy)
+                .frame(width: proxy.selectionBounds.width,
+                       height: proxy.selectionBounds.height)
+                .position(x: proxy.selectionPosition.x,
+                          y: proxy.selectionPosition.y)
         }
-            .padding()
+        .frame(width: 320.0, height: 480.0)
+        .offset(x: 0.0, y: 0.0)
+        .background(Color.gray)
+
     }
 }

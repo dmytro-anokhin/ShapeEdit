@@ -85,6 +85,8 @@ extension Sequence where Element == Graphic {
 
         return nil
     }
+
+    
 }
 
 extension Array where Element == Graphic {
@@ -111,6 +113,22 @@ extension Array where Element == Graphic {
         var element = self[index]
         change(&element)
         self[index] = element
+    }
+
+    var flatten: [Graphic] {
+        var result: [Graphic] = []
+        var queue: [Graphic] = self
+
+        while !queue.isEmpty {
+            let graphic = queue.removeFirst()
+            result.append(graphic)
+
+            if let children = graphic.children {
+                queue.append(contentsOf: children)
+            }
+        }
+
+        return result
     }
 }
 

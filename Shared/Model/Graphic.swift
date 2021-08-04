@@ -40,6 +40,8 @@ extension Graphic {
         case triangle
 
         case circle
+
+        case ellipse
     }
 }
 

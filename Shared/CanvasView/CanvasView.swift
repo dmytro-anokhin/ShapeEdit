@@ -9,74 +9,6 @@ import SwiftUI
 import AdvancedScrollView
 
 
-/// Drag direction, counter clockwise
-enum Direction {
-
-    case top
-
-    case topLeft
-
-    case left
-
-    case bottomLeft
-
-    case bottom
-
-    case bottomRight
-
-    case right
-
-    case topRight
-}
-
-
-struct GraphicSelectionProxy {
-
-    var graphic: Graphic
-
-    func hitTest(_ location: CGPoint) -> Direction? {
-        let rect = CGRect(origin: graphic.offset, size: graphic.size)
-        let radius = 10.0
-        let diameter = radius * 2.0
-        let hitBoxSize = CGSize(width: diameter, height: diameter)
-
-        if CGRect(origin: CGPoint(x: rect.midX - radius, y: rect.minY), size: hitBoxSize).contains(location) {
-            return .top
-        }
-
-        if CGRect(origin: CGPoint(x: rect.minX, y: rect.minY), size: hitBoxSize).contains(location) {
-            return .topLeft
-        }
-
-        if CGRect(origin: CGPoint(x: rect.minX, y: rect.midY - radius), size: hitBoxSize).contains(location) {
-            return .left
-        }
-
-        if CGRect(origin: CGPoint(x: rect.minX, y: rect.maxY - diameter), size: hitBoxSize).contains(location) {
-            return .bottomLeft
-        }
-
-        if CGRect(origin: CGPoint(x: rect.midX - radius, y: rect.maxY - diameter), size: hitBoxSize).contains(location) {
-            return .bottom
-        }
-
-        if CGRect(origin: CGPoint(x: rect.maxX - diameter, y: rect.maxY - diameter), size: hitBoxSize).contains(location) {
-            return .bottomRight
-        }
-
-        if CGRect(origin: CGPoint(x: rect.maxX - diameter, y: rect.midY - radius), size: hitBoxSize).contains(location) {
-            return .right
-        }
-
-        if CGRect(origin: CGPoint(x: rect.maxX - diameter, y: rect.minY), size: hitBoxSize).contains(location) {
-            return .topRight
-        }
-
-        return nil
-    }
-}
-
-
 struct CanvasView: View {
 
     @Binding var graphics: [Graphic]
@@ -87,11 +19,19 @@ struct CanvasView: View {
 
     @State private var dragInfo: DragInfo? = nil
 
-    private struct DragInfo {
+    private var selections: [SelectionProxy]
 
-        var translation: CGSize
+    init(graphics: Binding<[Graphic]>, selection: Binding<Set<String>>) {
+        self._graphics = graphics
+        self._selection = selection
 
-        var direction: Direction?
+        selections = graphics.wrappedValue.flatten.compactMap { graphic in
+            if selection.wrappedValue.contains(graphic.id) {
+                return SelectionProxy(graphic: graphic)
+            } else {
+                return nil
+            }
+        }
     }
 
     var body: some View {
@@ -120,7 +60,7 @@ struct CanvasView: View {
                         return false
                     }
 
-                    let selectionProxy = GraphicSelectionProxy(graphic: graphic)
+                    let selectionProxy = SelectionProxy(graphic: graphic)
                     let direction = selectionProxy.hitTest(location)
 
                     dragInfo = DragInfo(translation: translation, direction: direction)
@@ -149,10 +89,23 @@ struct CanvasView: View {
     @ViewBuilder var canvas: some View {
         ZStack(alignment: .topLeading) {
 
+            // Grid
+
             GridView(size: canvasSize)
+
+            // Graphics
 
             ForEach($graphics) { graphic in
                 makeTreeView(root: graphic.wrappedValue)
+            }
+
+            // Selection overlay
+            ForEach(selections) { proxy in
+                SelectionView(proxy: proxy)
+                    .frame(width: proxy.selectionBounds.width,
+                           height: proxy.selectionBounds.height)
+                    .position(x: proxy.selectionPosition.x,
+                              y: proxy.selectionPosition.y)
             }
         }
     }
@@ -165,13 +118,7 @@ struct CanvasView: View {
 
     @ViewBuilder func makeView(_ graphic: Graphic) -> some View {
         ZStack(alignment: .topLeading) {
-            if selection.contains(graphic.id) {
-                SelectionView {
-                    GraphicShapeView(graphic: graphic)
-                }
-            } else {
-                GraphicShapeView(graphic: graphic)
-            }
+            GraphicShapeView(graphic: graphic)
         }
         .frame(size: translatedSize(graphic))
         .position(translatedPosition(graphic))

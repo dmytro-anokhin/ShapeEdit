@@ -25,6 +25,8 @@
 		F44D542F26AA987600A757FB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D542D26AA987600A757FB /* Utilities.swift */; };
 		F4536CC726B907A400FCD6BA /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4536CC626B907A400FCD6BA /* SelectionView.swift */; };
 		F4536CC826B907A400FCD6BA /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4536CC626B907A400FCD6BA /* SelectionView.swift */; };
+		F47A244F26BAE8D500977136 /* DragInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A244E26BAE8D500977136 /* DragInfo.swift */; };
+		F47A245026BAE8D500977136 /* DragInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47A244E26BAE8D500977136 /* DragInfo.swift */; };
 		F4ED8A1626B46BEF004E7307 /* AdvancedScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F4ED8A1526B46BEF004E7307 /* AdvancedScrollView */; };
 		F4ED8A1926B46C02004E7307 /* AdvancedScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = F4ED8A1826B46C02004E7307 /* AdvancedScrollView */; };
 		F4ED8A1B26B48916004E7307 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED8A1A26B48916004E7307 /* GridView.swift */; };
@@ -72,6 +74,7 @@
 		F44D542926AA95FE00A757FB /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		F44D542D26AA987600A757FB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		F4536CC626B907A400FCD6BA /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
+		F47A244E26BAE8D500977136 /* DragInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragInfo.swift; sourceTree = "<group>"; };
 		F4ED8A1A26B48916004E7307 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		F4ED8A1F26B80123004E7307 /* NavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorView.swift; sourceTree = "<group>"; };
 		F4ED8A2226B8306E004E7307 /* GraphicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicShapeView.swift; sourceTree = "<group>"; };
@@ -215,6 +218,7 @@
 				F4ED8A1F26B80123004E7307 /* NavigatorView.swift */,
 				F4ED8A2226B8306E004E7307 /* GraphicShapeView.swift */,
 				F4536CC626B907A400FCD6BA /* SelectionView.swift */,
+				F47A244E26BAE8D500977136 /* DragInfo.swift */,
 			);
 			path = Auxiliary;
 			sourceTree = "<group>";
@@ -388,6 +392,7 @@
 				F44D542E26AA987600A757FB /* Utilities.swift in Sources */,
 				F44D540E26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F4ED8A1B26B48916004E7307 /* GridView.swift in Sources */,
+				F47A244F26BAE8D500977136 /* DragInfo.swift in Sources */,
 				F4ED8A2326B8306E004E7307 /* GraphicShapeView.swift in Sources */,
 				F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */,
 				F4ED8A2026B80123004E7307 /* NavigatorView.swift in Sources */,
@@ -405,6 +410,7 @@
 				F44D542F26AA987600A757FB /* Utilities.swift in Sources */,
 				F44D540F26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F4ED8A1C26B48916004E7307 /* GridView.swift in Sources */,
+				F47A245026BAE8D500977136 /* DragInfo.swift in Sources */,
 				F4ED8A2426B8306E004E7307 /* GraphicShapeView.swift in Sources */,
 				F44D540D26AA040000A757FB /* ShapeEditApp.swift in Sources */,
 				F4ED8A2126B80123004E7307 /* NavigatorView.swift in Sources */,

@@ -24,6 +24,10 @@ struct GraphicShapeView: View {
             case .circle:
                 Circle()
                     .fill(graphic.fill.color)
+
+            case .ellipse:
+                Ellipse()
+                    .fill(graphic.fill.color)
         }
     }
 }
