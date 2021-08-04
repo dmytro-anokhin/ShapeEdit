@@ -19,21 +19,6 @@ struct CanvasView: View {
 
     @State private var dragInfo: DragInfo? = nil
 
-    private var selections: [SelectionProxy]
-
-    init(graphics: Binding<[Graphic]>, selection: Binding<Set<String>>) {
-        self._graphics = graphics
-        self._selection = selection
-
-        selections = graphics.wrappedValue.flatten.compactMap { graphic in
-            if selection.wrappedValue.contains(graphic.id) {
-                return SelectionProxy(graphic: graphic)
-            } else {
-                return nil
-            }
-        }
-    }
-
     var body: some View {
         AdvancedScrollView { proxy in
             canvas
@@ -56,12 +41,18 @@ struct CanvasView: View {
                     return selection.contains(graphic.id)
 
                 case .began:
-                    guard let graphic = graphics.hitTest(location) else {
+                    guard let graphic = graphics.hitTest(location, extendBy: SelectionProxy.radius) else {
                         return false
                     }
 
                     let selectionProxy = SelectionProxy(graphic: graphic)
-                    let direction = selectionProxy.hitTest(location)
+
+                    // Location in selection proxy coordinates
+                    let translatedLocation = CGPoint(
+                        x: location.x - (selectionProxy.position.x),
+                        y: location.y - (selectionProxy.position.y))
+
+                    let direction = selectionProxy.hitTest(translatedLocation)
 
                     dragInfo = DragInfo(translation: translation, direction: direction)
 
@@ -72,10 +63,12 @@ struct CanvasView: View {
                     dragInfo = nil
 
                 case .ended:
-                    for id in selection {
-                        graphics.update(id) { graphic in
-                            graphic.offset = translatedOffset(graphic)
-                            graphic.size = translatedSize(graphic)
+                    if let dragInfo = dragInfo {
+                        for id in selection {
+                            graphics.update(id) { graphic in
+                                graphic.offset = dragInfo.translatedOffset(graphic.offset)
+                                graphic.size = dragInfo.translatedSize(graphic.size)
+                            }
                         }
                     }
 
@@ -86,8 +79,17 @@ struct CanvasView: View {
         }
     }
 
-    @ViewBuilder var canvas: some View {
-        ZStack(alignment: .topLeading) {
+    //@ViewBuilder
+    var canvas: some View {
+        let selections: [SelectionProxy] = graphics.flatten.compactMap { graphic in
+            if selection.contains(graphic.id) {
+                return SelectionProxy(graphic: graphic)
+            } else {
+                return nil
+            }
+        }
+
+        return ZStack(alignment: .topLeading) {
 
             // Grid
 
@@ -101,11 +103,17 @@ struct CanvasView: View {
 
             // Selection overlay
             ForEach(selections) { proxy in
-                SelectionView(proxy: proxy)
-                    .frame(width: proxy.selectionBounds.width,
-                           height: proxy.selectionBounds.height)
-                    .position(x: proxy.selectionPosition.x,
-                              y: proxy.selectionPosition.y)
+                if let dragInfo = dragInfo, selection.contains(proxy.id) {
+                    SelectionView(proxy: proxy)
+                        .frame(size: dragInfo.translatedSize(proxy.selectionBounds.size))
+                        .position(dragInfo.translatedPosition(proxy.selectionPosition, proxy.selectionBounds.size))
+                } else {
+                    SelectionView(proxy: proxy)
+                        .frame(width: proxy.selectionBounds.width,
+                               height: proxy.selectionBounds.height)
+                        .position(x: proxy.selectionPosition.x + proxy.selectionBounds.width * 0.5,
+                                  y: proxy.selectionPosition.y + proxy.selectionBounds.height * 0.5)
+                }
             }
         }
     }
@@ -117,99 +125,15 @@ struct CanvasView: View {
     }
 
     @ViewBuilder func makeView(_ graphic: Graphic) -> some View {
-        ZStack(alignment: .topLeading) {
-            GraphicShapeView(graphic: graphic)
-        }
-        .frame(size: translatedSize(graphic))
-        .position(translatedPosition(graphic))
-    }
-
-    private func translatedPosition(_ graphic: Graphic) -> CGPoint {
-        let size = translatedSize(graphic)
-        let offset = translatedOffset(graphic)
-
-        return CGPoint(x: offset.x + size.width * 0.5,
-                       y: offset.y + size.height * 0.5)
-    }
-
-    private func translatedOffset(_ graphic: Graphic) -> CGPoint {
-        var offset = graphic.offset
-
         if let dragInfo = dragInfo, selection.contains(graphic.id) {
-            if let direction = dragInfo.direction {
-                switch direction {
-                    case .top:
-                        offset.y += dragInfo.translation.height
-
-                    case .topLeft:
-                        offset.x += dragInfo.translation.width
-                        offset.y += dragInfo.translation.height
-
-                    case .left:
-                        offset.x += dragInfo.translation.width
-
-                    case .bottomLeft:
-                        offset.x += dragInfo.translation.width
-
-                    case .bottom:
-                        break
-
-                    case .bottomRight:
-                        break
-
-                    case .right:
-                        break
-
-                    case .topRight:
-                        offset.y += dragInfo.translation.height
-                }
-            } else {
-                offset.x += dragInfo.translation.width
-                offset.y += dragInfo.translation.height
-            }
+            GraphicShapeView(graphic: graphic)
+                .frame(size: dragInfo.translatedSize(graphic.size))
+                .position(dragInfo.translatedPosition(graphic))
+        } else {
+            GraphicShapeView(graphic: graphic)
+                .frame(size: graphic.size)
+                .position(x: graphic.offset.x + graphic.size.width * 0.5,
+                          y: graphic.offset.y + graphic.size.height * 0.5)
         }
-
-        return offset
-    }
-
-    private func translatedSize(_ graphic: Graphic) -> CGSize {
-        var size = graphic.size
-
-        if let dragInfo = dragInfo,
-           selection.contains(graphic.id),
-           let direction = dragInfo.direction {
-
-            switch direction {
-                case .top:
-                    size.height -= dragInfo.translation.height
-
-                case .topLeft:
-                    size.width -= dragInfo.translation.width
-                    size.height -= dragInfo.translation.height
-
-                case .left:
-                    size.width -= dragInfo.translation.width
-
-                case .bottomLeft:
-                    size.width -= dragInfo.translation.width
-                    size.height += dragInfo.translation.height
-
-                case .bottom:
-                    size.height += dragInfo.translation.height
-
-                case .bottomRight:
-                    size.width += dragInfo.translation.width
-                    size.height += dragInfo.translation.height
-
-                case .right:
-                    size.width += dragInfo.translation.width
-
-                case .topRight:
-                    size.width += dragInfo.translation.width
-                    size.height -= dragInfo.translation.height
-            }
-        }
-
-        return size
     }
 }

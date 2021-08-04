@@ -8,83 +8,90 @@
 import SwiftUI
 
 
-struct SelectionProxy: Hashable, Identifiable {
+struct SelectionProxy: Identifiable {
 
-    var graphic: Graphic
+    static let radius: CGFloat = 5.0
 
-    var radius: CGFloat = 5.0
+    var id: String
 
-    var translation: CGSize = .zero
+    var offset: CGPoint
+
+    var size: CGSize
+
+    init(graphic: Graphic) {
+        self.id = graphic.id
+        self.offset = graphic.offset
+        self.size = graphic.size
+    }
 
     var graphicBounds: CGRect {
-        CGRect(origin: .zero, size: graphic.size)
+        CGRect(origin: .zero, size: size)
     }
 
     var graphicFrame: CGRect {
-        CGRect(origin: graphic.offset, size: graphic.size)
+        CGRect(origin: offset, size: size)
     }
 
     var selectionBounds: CGRect {
-        CGRect(origin: .zero, size: graphic.size)
-            .insetBy(dx: -radius, dy: -radius)
+        CGRect(origin: .zero, size: size)
+            .insetBy(dx: -SelectionProxy.radius, dy: -SelectionProxy.radius)
     }
 
     var selectionFrame: CGRect {
-        CGRect(origin: graphic.offset, size: graphic.size)
-            .insetBy(dx: -radius, dy: -radius)
+        CGRect(origin: offset, size: size)
+            .insetBy(dx: -SelectionProxy.radius, dy: -SelectionProxy.radius)
     }
 
     var position: CGPoint {
-        CGPoint(x: graphicFrame.minX + graphicBounds.width * 0.5,
-                y: graphicFrame.minY + graphicBounds.height * 0.5)
+        graphicFrame.origin
     }
 
     var selectionPosition: CGPoint {
-        CGPoint(x: selectionFrame.minX + selectionFrame.width * 0.5,
-                y: selectionFrame.minY + selectionFrame.height * 0.5)
+        selectionFrame.origin
     }
 
     func rect(direction: Direction) -> CGRect {
+        rect(direction: direction, in: graphicBounds)
+    }
 
-        let size = CGSize(width: radius * 2.0, height: radius * 2.0)
+    func rect(direction: Direction, in bounds: CGRect) -> CGRect {
+
+        let size = CGSize(width: SelectionProxy.radius * 2.0, height: SelectionProxy.radius * 2.0)
         let origin: CGPoint
 
         switch direction {
             case .top:
-                origin = CGPoint(x: graphicBounds.midX - radius, y: graphicBounds.minY - radius)
+                origin = CGPoint(x: bounds.midX - SelectionProxy.radius, y: bounds.minY - SelectionProxy.radius)
             case .topLeft:
-                origin = CGPoint(x: graphicBounds.minX - radius, y: graphicBounds.minY - radius)
+                origin = CGPoint(x: bounds.minX - SelectionProxy.radius, y: bounds.minY - SelectionProxy.radius)
             case .left:
-                origin = CGPoint(x: graphicBounds.minX - radius, y: graphicBounds.midY - radius)
+                origin = CGPoint(x: bounds.minX - SelectionProxy.radius, y: bounds.midY - SelectionProxy.radius)
             case .bottomLeft:
-                origin = CGPoint(x: graphicBounds.minX - radius, y: graphicBounds.maxY - radius)
+                origin = CGPoint(x: bounds.minX - SelectionProxy.radius, y: bounds.maxY - SelectionProxy.radius)
             case .bottom:
-                origin = CGPoint(x: graphicBounds.midX - radius, y: graphicBounds.maxY - radius)
+                origin = CGPoint(x: bounds.midX - SelectionProxy.radius, y: bounds.maxY - SelectionProxy.radius)
             case .bottomRight:
-                origin = CGPoint(x: graphicBounds.maxX - radius, y: graphicBounds.maxY - radius)
+                origin = CGPoint(x: bounds.maxX - SelectionProxy.radius, y: bounds.maxY - SelectionProxy.radius)
             case .right:
-                origin = CGPoint(x: graphicBounds.maxX - radius, y: graphicBounds.midY - radius)
+                origin = CGPoint(x: bounds.maxX - SelectionProxy.radius, y: bounds.midY - SelectionProxy.radius)
             case .topRight:
-                origin = CGPoint(x: graphicBounds.maxX - radius, y: graphicBounds.minY - radius)
+                origin = CGPoint(x: bounds.maxX - SelectionProxy.radius, y: bounds.minY - SelectionProxy.radius)
         }
 
         return CGRect(origin: origin, size: size)
     }
 
     func hitTest(_ location: CGPoint) -> Direction? {
-        nil
-    }
+        for direction in Direction.allCases {
+            let rect = rect(direction: direction)
+                .insetBy(dx: -10.0, dy: -10.0)
 
-    // MARK: - Hashable
+            if rect.contains(location) {
+                return direction
+            }
+        }
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(graphic)
-    }
-
-    // MARK: - Identifiable
-
-    var id: String {
-        graphic.id
+        return nil
     }
 }
 
@@ -98,24 +105,20 @@ struct SelectionView: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            SelectionBorder(radius: proxy.radius)
+            SelectionBorder()
                 .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
                 .foregroundColor(Color.blue)
 
-            SelectionControls(controls: Direction.allCases.map { proxy.rect(direction: $0) })
+            SelectionControls(proxy: proxy)
                 .fill(Color.white)
-                .offset(x: proxy.radius, y: proxy.radius)
 
-            SelectionControls(controls: Direction.allCases.map { proxy.rect(direction: $0) })
+            SelectionControls(proxy: proxy)
                 .stroke(Color.blue)
-                .offset(x: proxy.radius, y: proxy.radius)
         }
     }
 }
 
 struct SelectionBorder: Shape {
-
-    var radius: CGFloat
 
     private struct Segment {
 
@@ -128,36 +131,36 @@ struct SelectionBorder: Shape {
 
     func path(in rect: CGRect) -> Path {
 
-        let diameter = radius * 2.0
+        let diameter = SelectionProxy.radius * 2.0
 
         let segments: [Segment] = [
             // Top-Left to Top-Right
-            Segment(from: CGPoint(x: rect.minX + diameter, y: rect.minY + radius),
-                    to: CGPoint(x: rect.midX - radius, y: rect.minY + radius)),
+            Segment(from: CGPoint(x: rect.minX + diameter, y: rect.minY + SelectionProxy.radius),
+                    to: CGPoint(x: rect.midX - SelectionProxy.radius, y: rect.minY + SelectionProxy.radius)),
 
-            Segment(from: CGPoint(x: rect.midX + radius, y: rect.minY + radius),
-                    to: CGPoint(x: rect.maxX - diameter, y: rect.minY + radius)),
+            Segment(from: CGPoint(x: rect.midX + SelectionProxy.radius, y: rect.minY + SelectionProxy.radius),
+                    to: CGPoint(x: rect.maxX - diameter, y: rect.minY + SelectionProxy.radius)),
 
             // Top-Right to Bottom-Left
-            Segment(from: CGPoint(x: rect.maxX - radius, y: rect.minY + diameter),
-                    to: CGPoint(x: rect.maxX - radius, y: rect.midY - radius)),
+            Segment(from: CGPoint(x: rect.maxX - SelectionProxy.radius, y: rect.minY + diameter),
+                    to: CGPoint(x: rect.maxX - SelectionProxy.radius, y: rect.midY - SelectionProxy.radius)),
 
-            Segment(from: CGPoint(x: rect.maxX - radius, y: rect.midY + radius),
-                    to: CGPoint(x: rect.maxX - radius, y: rect.maxY - diameter)),
+            Segment(from: CGPoint(x: rect.maxX - SelectionProxy.radius, y: rect.midY + SelectionProxy.radius),
+                    to: CGPoint(x: rect.maxX - SelectionProxy.radius, y: rect.maxY - diameter)),
 
             // Bottom-Right to Bottom-Left
-            Segment(from: CGPoint(x: rect.maxX - diameter, y: rect.maxY - radius),
-                    to: CGPoint(x: rect.midX + radius, y: rect.maxY - radius)),
+            Segment(from: CGPoint(x: rect.maxX - diameter, y: rect.maxY - SelectionProxy.radius),
+                    to: CGPoint(x: rect.midX + SelectionProxy.radius, y: rect.maxY - SelectionProxy.radius)),
 
-            Segment(from: CGPoint(x: rect.midX - radius, y: rect.maxY - radius),
-                    to: CGPoint(x: rect.minX + diameter, y: rect.maxY - radius)),
+            Segment(from: CGPoint(x: rect.midX - SelectionProxy.radius, y: rect.maxY - SelectionProxy.radius),
+                    to: CGPoint(x: rect.minX + diameter, y: rect.maxY - SelectionProxy.radius)),
 
             // Bottom-Left to Top-Left
-            Segment(from: CGPoint(x: rect.minX + radius, y: rect.maxY - diameter),
-                    to: CGPoint(x: rect.minX + radius, y: rect.midY + radius)),
+            Segment(from: CGPoint(x: rect.minX + SelectionProxy.radius, y: rect.maxY - diameter),
+                    to: CGPoint(x: rect.minX + SelectionProxy.radius, y: rect.midY + SelectionProxy.radius)),
 
-            Segment(from: CGPoint(x: rect.minX + radius, y: rect.midY - radius),
-                    to: CGPoint(x: rect.minX + radius, y: rect.minY + diameter))
+            Segment(from: CGPoint(x: rect.minX + SelectionProxy.radius, y: rect.midY - SelectionProxy.radius),
+                    to: CGPoint(x: rect.minX + SelectionProxy.radius, y: rect.minY + diameter))
         ]
 
         var path = Path()
@@ -173,11 +176,16 @@ struct SelectionBorder: Shape {
 
 struct SelectionControls: Shape {
 
-    var controls: [CGRect] = []
+    var proxy: SelectionProxy
 
     func path(in rect: CGRect) -> Path {
 
         var path = Path()
+
+        let controls = Direction.allCases.map {
+            proxy.rect(direction: $0,
+                       in: rect.insetBy(dx: SelectionProxy.radius, dy: SelectionProxy.radius))
+        }
 
         for control in controls {
             path.addEllipse(in: control)
@@ -203,14 +211,14 @@ struct SelectionView_Previews: PreviewProvider {
             GraphicShapeView(graphic: graphic)
                 .frame(width: proxy.graphicBounds.width,
                        height: proxy.graphicBounds.height)
-                .position(x: proxy.position.x,
-                          y: proxy.position.y)
+                .position(x: proxy.position.x + proxy.graphicBounds.width * 0.5,
+                          y: proxy.position.y + proxy.graphicBounds.height * 0.5)
 
             SelectionView(proxy: proxy)
                 .frame(width: proxy.selectionBounds.width,
                        height: proxy.selectionBounds.height)
-                .position(x: proxy.selectionPosition.x,
-                          y: proxy.selectionPosition.y)
+                .position(x: proxy.selectionPosition.x + proxy.selectionFrame.width * 0.5,
+                          y: proxy.selectionPosition.y + proxy.selectionFrame.height * 0.5)
         }
         .frame(width: 320.0, height: 480.0)
         .offset(x: 0.0, y: 0.0)
