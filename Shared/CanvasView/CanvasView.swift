@@ -60,12 +60,7 @@ struct CanvasView: View {
                     for graphic in selected {
                         let selectionProxy = SelectionProxy(graphic: graphic)
 
-                        // Location in selection proxy coordinates
-                        let translatedLocation = CGPoint(
-                            x: location.x - (selectionProxy.position.x),
-                            y: location.y - (selectionProxy.position.y))
-
-                        if let direction = selectionProxy.hitTest(translatedLocation) {
+                        if let direction = selectionProxy.hitTest(location) {
                             dragInfo = DragInfo(translation: translation, direction: direction)
                             break
                         }
@@ -94,17 +89,18 @@ struct CanvasView: View {
         }
     }
 
-    //@ViewBuilder
-    var canvas: some View {
-        let selections: [SelectionProxy] = graphics.flatten.compactMap { graphic in
+    private var selections: [SelectionProxy] {
+        graphics.flatten.compactMap { graphic in
             if selection.contains(graphic.id) {
                 return SelectionProxy(graphic: graphic)
             } else {
                 return nil
             }
         }
+    }
 
-        return ZStack(alignment: .topLeading) {
+    @ViewBuilder var canvas: some View {
+        ZStack(alignment: .topLeading) {
 
             // Grid
 

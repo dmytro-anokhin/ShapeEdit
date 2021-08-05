@@ -85,12 +85,17 @@ struct SelectionProxy: Identifiable {
     }
 
     func hitTest(_ location: CGPoint) -> Direction? {
+
+        // Location in local coordinates
+        let localLocation = CGPoint(x: location.x - position.x,
+                                    y: location.y - position.y)
+
         for direction in Direction.allCases {
             let rect = rect(direction: direction)
                 .insetBy(dx: -SelectionProxy.extendedRadius,
                          dy: -SelectionProxy.extendedRadius)
 
-            if rect.contains(location) {
+            if rect.contains(localLocation) {
                 return direction
             }
         }
