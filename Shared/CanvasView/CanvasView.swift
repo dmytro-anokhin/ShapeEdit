@@ -20,7 +20,7 @@ struct CanvasView: View {
     @State private var dragInfo: DragInfo? = nil
 
     var body: some View {
-        AdvancedScrollView { proxy in
+        AdvancedScrollView(magnification: Magnification(range: 1.0...4.0, initialValue: 1.0, isRelative: false)) { proxy in
             canvas
                 .frame(width: canvasSize.width, height: canvasSize.height)
         }.onTapContentGesture { location, proxy in
