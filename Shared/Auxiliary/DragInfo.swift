@@ -37,34 +37,32 @@ struct DragInfo {
     /// Direction if dragging one of selection sides
     var direction: Direction?
 
-    func translatedPosition(_ graphic: Graphic) -> CGPoint {
-        translatedPosition(graphic.offset, graphic.size)
+    func translatedFrame(_ graphic: Graphic) -> CGRect {
+        translatedFrame(graphic.frame)
     }
 
-    func translatedPosition(_ offset: CGPoint, _ size: CGSize) -> CGPoint {
-        let offset = translatedOffset(offset)
-        let size = translatedSize(size)
-
-        return CGPoint(x: offset.x + size.width * 0.5, y: offset.y + size.height * 0.5)
+    func translatedFrame(_ rect: CGRect) -> CGRect {
+        CGRect(origin: translatedPoint(rect.origin),
+               size: translatedSize(rect.size))
     }
 
-    func translatedOffset(_ offset: CGPoint) -> CGPoint {
-        var offset = offset
+    func translatedPoint(_ point: CGPoint) -> CGPoint {
+        var point = point
 
         if let direction = direction {
             switch direction {
                 case .top:
-                    offset.y += translation.height
+                    point.y += translation.height
 
                 case .topLeft:
-                    offset.x += translation.width
-                    offset.y += translation.height
+                    point.x += translation.width
+                    point.y += translation.height
 
                 case .left:
-                    offset.x += translation.width
+                    point.x += translation.width
 
                 case .bottomLeft:
-                    offset.x += translation.width
+                    point.x += translation.width
 
                 case .bottom:
                     break
@@ -76,14 +74,14 @@ struct DragInfo {
                     break
 
                 case .topRight:
-                    offset.y += translation.height
+                    point.y += translation.height
             }
         } else {
-            offset.x += translation.width
-            offset.y += translation.height
+            point.x += translation.width
+            point.y += translation.height
         }
 
-        return offset
+        return point
     }
 
     func translatedSize(_ size: CGSize) -> CGSize {

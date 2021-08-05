@@ -24,6 +24,10 @@ struct Graphic: Hashable, Codable, Identifiable {
     var offset: CGPoint = .zero
     var size: CGSize = .zero
 
+    var frame: CGRect {
+        CGRect(origin: offset, size: size)
+    }
+
     // MARK: - Hashable
 
     func hash(into hasher: inout Hasher) {

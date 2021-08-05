@@ -66,7 +66,7 @@ struct CanvasView: View {
                     if let dragInfo = dragInfo {
                         for id in selection {
                             graphics.update(id) { graphic in
-                                graphic.offset = dragInfo.translatedOffset(graphic.offset)
+                                graphic.offset = dragInfo.translatedPoint(graphic.offset)
                                 graphic.size = dragInfo.translatedSize(graphic.size)
                             }
                         }
@@ -105,14 +105,10 @@ struct CanvasView: View {
             ForEach(selections) { proxy in
                 if let dragInfo = dragInfo, selection.contains(proxy.id) {
                     SelectionView(proxy: proxy)
-                        .frame(size: dragInfo.translatedSize(proxy.selectionBounds.size))
-                        .position(dragInfo.translatedPosition(proxy.selectionPosition, proxy.selectionBounds.size))
+                        .frame(rect: dragInfo.translatedFrame(proxy.selectionFrame))
                 } else {
                     SelectionView(proxy: proxy)
-                        .frame(width: proxy.selectionBounds.width,
-                               height: proxy.selectionBounds.height)
-                        .position(x: proxy.selectionPosition.x + proxy.selectionBounds.width * 0.5,
-                                  y: proxy.selectionPosition.y + proxy.selectionBounds.height * 0.5)
+                        .frame(rect: proxy.selectionFrame)
                 }
             }
         }
@@ -127,13 +123,10 @@ struct CanvasView: View {
     @ViewBuilder func makeView(_ graphic: Graphic) -> some View {
         if let dragInfo = dragInfo, selection.contains(graphic.id) {
             GraphicShapeView(graphic: graphic)
-                .frame(size: dragInfo.translatedSize(graphic.size))
-                .position(dragInfo.translatedPosition(graphic))
+                .frame(rect: dragInfo.translatedFrame(graphic))
         } else {
             GraphicShapeView(graphic: graphic)
-                .frame(size: graphic.size)
-                .position(x: graphic.offset.x + graphic.size.width * 0.5,
-                          y: graphic.offset.y + graphic.size.height * 0.5)
+                .frame(rect: graphic.frame)
         }
     }
 }

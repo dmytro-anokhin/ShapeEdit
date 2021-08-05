@@ -137,4 +137,9 @@ extension View {
     func frame(size: CGSize) -> some View {
         self.frame(width: size.width, height: size.height)
     }
+
+    func frame(rect: CGRect) -> some View {
+        self.frame(width: rect.width, height: rect.height)
+            .position(x: rect.midX, y: rect.midY)
+    }
 }
