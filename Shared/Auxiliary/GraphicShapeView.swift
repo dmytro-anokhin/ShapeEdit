@@ -21,10 +21,6 @@ struct GraphicShapeView: View {
                 Triangle()
                     .fill(graphic.fill.color)
 
-            case .circle:
-                Circle()
-                    .fill(graphic.fill.color)
-
             case .ellipse:
                 Ellipse()
                     .fill(graphic.fill.color)

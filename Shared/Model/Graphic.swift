@@ -43,8 +43,6 @@ extension Graphic {
 
         case triangle
 
-        case circle
-
         case ellipse
     }
 }
@@ -91,8 +89,8 @@ extension Graphic {
                                 offset: CGPoint(x: 450.0, y: 110.0),
                                 size: CGSize(width: 50.0, height: 50.0)),
                         Graphic(id: UUID().uuidString,
-                                name: "Circle",
-                                content: .circle,
+                                name: "Ellipse",
+                                content: .ellipse,
                                 children: nil,
                                 fill: .blue,
                                 offset: CGPoint(x: 400.0, y: 100.0),
@@ -109,8 +107,8 @@ extension Graphic {
                     offset: CGPoint(x: 550.0, y: 200.0),
                     size: CGSize(width: 300.0, height: 200.0)),
             Graphic(id: UUID().uuidString,
-                    name: "Circle",
-                    content: .circle,
+                    name: "Ellipse",
+                    content: .ellipse,
                     children: nil,
                     fill: .yellow,
                     offset: CGPoint(x: 300.0, y: 300.0),
