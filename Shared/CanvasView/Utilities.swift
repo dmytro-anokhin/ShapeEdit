@@ -63,14 +63,12 @@ extension Graphic.Fill {
 
 extension Graphic {
 
-    func hitTest(_ point: CGPoint, extendBy delta: CGFloat = 0.0) -> Graphic? {
-        if let children = children, let child = children.hitTest(point) {
+    func hitTest(_ point: CGPoint, includeChildren: Bool = true, extendBy delta: CGFloat = 0.0) -> Graphic? {
+        if includeChildren, let children = children, let child = children.hitTest(point) {
             return child
         }
 
-        let rect = CGRect(origin: offset, size: size)
-            // .insetBy(dx: -delta, dy: -delta)
-        return rect.contains(point) ? self : nil
+        return frame.insetBy(dx: -delta, dy: -delta).contains(point) ? self : nil
     }
 }
 
@@ -85,8 +83,6 @@ extension Sequence where Element == Graphic {
 
         return nil
     }
-
-    
 }
 
 extension Array where Element == Graphic {
@@ -113,6 +109,41 @@ extension Array where Element == Graphic {
         var element = self[index]
         change(&element)
         self[index] = element
+    }
+
+    func recursiveFirst(where predicate: (_ graphic: Graphic) -> Bool) -> Graphic? {
+        var queue: [Graphic] = self
+
+        while !queue.isEmpty {
+            let graphic = queue.removeFirst()
+
+            if predicate(graphic) {
+                return graphic
+            } else if let children = graphic.children {
+                queue.append(contentsOf: children)
+            }
+        }
+
+        return nil
+    }
+
+    func recursiveFilter(_ isIncluded: (Graphic) throws -> Bool) rethrows -> [Graphic] {
+        var result: [Graphic] = []
+        var queue: [Graphic] = self
+
+        while !queue.isEmpty {
+            let graphic = queue.removeFirst()
+
+            if try isIncluded(graphic) {
+                result.append(graphic)
+            }
+
+            if let children = graphic.children {
+                queue.append(contentsOf: children)
+            }
+        }
+
+        return result
     }
 
     var flatten: [Graphic] {

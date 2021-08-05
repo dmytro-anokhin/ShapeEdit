@@ -34,27 +34,42 @@ struct CanvasView: View {
         .onDragContentGesture { phase, location, translation, proxy in
             switch phase {
                 case .possible:
-                    guard let graphic = graphics.hitTest(location) else {
+                    guard !selection.isEmpty else {
                         return false
                     }
 
-                    return selection.contains(graphic.id)
+                    let selected = graphics.recursiveFilter {
+                        selection.contains($0.id)
+                            && $0.hitTest(location, includeChildren: false, extendBy: SelectionProxy.radius) != nil
+                    }
+
+                    return !selected.isEmpty
 
                 case .began:
-                    guard let graphic = graphics.hitTest(location, extendBy: SelectionProxy.radius) else {
+                    guard !selection.isEmpty else {
                         return false
                     }
 
-                    let selectionProxy = SelectionProxy(graphic: graphic)
+                    dragInfo = DragInfo(translation: translation, direction: nil)
 
-                    // Location in selection proxy coordinates
-                    let translatedLocation = CGPoint(
-                        x: location.x - (selectionProxy.position.x),
-                        y: location.y - (selectionProxy.position.y))
+                    let selected = graphics.recursiveFilter {
+                        selection.contains($0.id)
+                            && $0.hitTest(location, includeChildren: false, extendBy: SelectionProxy.radius) != nil
+                    }
 
-                    let direction = selectionProxy.hitTest(translatedLocation)
+                    for graphic in selected {
+                        let selectionProxy = SelectionProxy(graphic: graphic)
 
-                    dragInfo = DragInfo(translation: translation, direction: direction)
+                        // Location in selection proxy coordinates
+                        let translatedLocation = CGPoint(
+                            x: location.x - (selectionProxy.position.x),
+                            y: location.y - (selectionProxy.position.y))
+
+                        if let direction = selectionProxy.hitTest(translatedLocation) {
+                            dragInfo = DragInfo(translation: translation, direction: direction)
+                            break
+                        }
+                    }
 
                 case .changed:
                     dragInfo?.translation = translation

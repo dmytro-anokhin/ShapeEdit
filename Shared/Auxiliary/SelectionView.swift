@@ -12,6 +12,9 @@ struct SelectionProxy: Identifiable {
 
     static let radius: CGFloat = 5.0
 
+    /// Used for hit test
+    static let extendedRadius: CGFloat = 15.0
+
     var id: String
 
     var offset: CGPoint
@@ -84,7 +87,8 @@ struct SelectionProxy: Identifiable {
     func hitTest(_ location: CGPoint) -> Direction? {
         for direction in Direction.allCases {
             let rect = rect(direction: direction)
-                .insetBy(dx: -10.0, dy: -10.0)
+                .insetBy(dx: -SelectionProxy.extendedRadius,
+                         dy: -SelectionProxy.extendedRadius)
 
             if rect.contains(location) {
                 return direction
