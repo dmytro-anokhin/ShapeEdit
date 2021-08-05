@@ -13,12 +13,26 @@ struct ContentView: View {
 
     @State var selection: Set<String> = []
 
+    @State private var isLibraryPresented = false
+
     var body: some View {
         #if os(macOS)
-        HSplitView {
+        NavigationView {
+        //HSplitView {
             NavigatorView(graphics: document.graphics, selection: $selection)
                 .frame(width: 200.0)
             CanvasView(graphics: $document.graphics, selection: $selection)
+        }.toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button {
+                    isLibraryPresented.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .popover(isPresented: $isLibraryPresented) {
+                    LibraryView(document: $document)
+                }
+            }
         }
         #else
         CanvasView(graphics: $document.graphics, selection: $selection)

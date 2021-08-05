@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F42E979426BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
+		F42E979526BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
 		F44D53FF26AA040000A757FB /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D53FE26AA040000A757FB /* Tests_iOS.swift */; };
 		F44D540A26AA040000A757FB /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D540926AA040000A757FB /* Tests_macOS.swift */; };
 		F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */; };
@@ -55,6 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F42E979326BC43FC001C37C2 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditApp.swift; sourceTree = "<group>"; };
 		F44D53E326AA03FE00A757FB /* ShapeEditDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditDocument.swift; sourceTree = "<group>"; };
 		F44D53E426AA03FE00A757FB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -219,6 +222,7 @@
 				F4ED8A2226B8306E004E7307 /* GraphicShapeView.swift */,
 				F4536CC626B907A400FCD6BA /* SelectionView.swift */,
 				F47A244E26BAE8D500977136 /* DragInfo.swift */,
+				F42E979326BC43FC001C37C2 /* LibraryView.swift */,
 			);
 			path = Auxiliary;
 			sourceTree = "<group>";
@@ -393,6 +397,7 @@
 				F44D540E26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F4ED8A1B26B48916004E7307 /* GridView.swift in Sources */,
 				F47A244F26BAE8D500977136 /* DragInfo.swift in Sources */,
+				F42E979426BC43FC001C37C2 /* LibraryView.swift in Sources */,
 				F4ED8A2326B8306E004E7307 /* GraphicShapeView.swift in Sources */,
 				F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */,
 				F4ED8A2026B80123004E7307 /* NavigatorView.swift in Sources */,
@@ -411,6 +416,7 @@
 				F44D540F26AA040000A757FB /* ShapeEditDocument.swift in Sources */,
 				F4ED8A1C26B48916004E7307 /* GridView.swift in Sources */,
 				F47A245026BAE8D500977136 /* DragInfo.swift in Sources */,
+				F42E979526BC43FC001C37C2 /* LibraryView.swift in Sources */,
 				F4ED8A2426B8306E004E7307 /* GraphicShapeView.swift in Sources */,
 				F44D540D26AA040000A757FB /* ShapeEditApp.swift in Sources */,
 				F4ED8A2126B80123004E7307 /* NavigatorView.swift in Sources */,
