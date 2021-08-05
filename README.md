@@ -10,6 +10,6 @@ ShapeEdit contains some shapes that can be interacted with on a fixed size canva
 
 I'm working on improving interactions and adding features to make it more or less working vector editing tool.
 
-![ShapeEdit](https://user-images.githubusercontent.com/5136301/128252696-f7bf056f-ba98-4dd5-8d51-7ddd65d3223c.png)
+![ShapeEdit](https://user-images.githubusercontent.com/5136301/128293985-033b60c4-0e32-4a5c-a2fe-ac41f838bd6f.png)
 
 You need Xcode 13 to run it.
