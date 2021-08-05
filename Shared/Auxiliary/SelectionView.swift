@@ -87,8 +87,8 @@ struct SelectionProxy: Identifiable {
     func hitTest(_ location: CGPoint) -> Direction? {
 
         // Location in local coordinates
-        let localLocation = CGPoint(x: location.x - position.x,
-                                    y: location.y - position.y)
+        let localLocation = CGPoint(x: location.x - selectionPosition.x,
+                                    y: location.y - selectionPosition.y)
 
         for direction in Direction.allCases {
             let rect = rect(direction: direction)
