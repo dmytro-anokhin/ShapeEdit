@@ -16,11 +16,12 @@ struct NavigatorView: View {
 
     var body: some View {
         List(selection: $selection) {
-            Section(header: Text("Canvas")) {
+            // Using section breaks selection when some items are collapsed in Xcode 13.0 beta 3 (13A5192j)
+            //Section(header: Text("Canvas")) {
                 OutlineGroup(graphics, children: \.children) {
                     GraphicRow($0)
                 }
-            }
+            //}
         }
         .listStyle(.sidebar)
     }

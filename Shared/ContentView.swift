@@ -17,12 +17,18 @@ struct ContentView: View {
 
     var body: some View {
         #if os(macOS)
-        NavigationView {
-        //HSplitView {
+        HSplitView {
             NavigatorView(graphics: document.graphics, selection: $selection)
                 .frame(width: 200.0)
-            CanvasView(graphics: $document.graphics, selection: $selection)
-        }.toolbar {
+
+            HSplitView {
+                CanvasView(graphics: $document.graphics, selection: $selection)
+                    .layoutPriority(1.0)
+                InspectorView(graphics: $document.graphics, selection: $selection)
+                    .frame(minWidth: 200.0, maxWidth: 320.0)
+            }
+        }
+        .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button {
                     isLibraryPresented.toggle()

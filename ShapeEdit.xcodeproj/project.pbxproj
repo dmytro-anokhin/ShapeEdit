@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F428FBB626BD99A300C07179 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428FBB526BD99A300C07179 /* InspectorView.swift */; };
+		F428FBB726BD99A400C07179 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428FBB526BD99A300C07179 /* InspectorView.swift */; };
 		F42E979426BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
 		F42E979526BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
 		F44D53FF26AA040000A757FB /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D53FE26AA040000A757FB /* Tests_iOS.swift */; };
@@ -57,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F428FBB526BD99A300C07179 /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
 		F42E979326BC43FC001C37C2 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditApp.swift; sourceTree = "<group>"; };
 		F44D53E326AA03FE00A757FB /* ShapeEditDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditDocument.swift; sourceTree = "<group>"; };
@@ -117,6 +120,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F428FBB426BD996400C07179 /* Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				F428FBB526BD99A300C07179 /* InspectorView.swift */,
+			);
+			path = Inspector;
+			sourceTree = "<group>";
+		};
 		F44D53DC26AA03FD00A757FB = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +144,7 @@
 		F44D53E126AA03FE00A757FB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F428FBB426BD996400C07179 /* Inspector */,
 				F4ED8A1E26B800C5004E7307 /* Auxiliary */,
 				F44D542C26AA985F00A757FB /* Model */,
 				F44D542826AA95F000A757FB /* CanvasView */,
@@ -403,6 +415,7 @@
 				F4ED8A2026B80123004E7307 /* NavigatorView.swift in Sources */,
 				F44D542A26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542326AA0A2F00A757FB /* Graphic.swift in Sources */,
+				F428FBB626BD99A300C07179 /* InspectorView.swift in Sources */,
 				F44D541026AA040000A757FB /* ContentView.swift in Sources */,
 				F4536CC726B907A400FCD6BA /* SelectionView.swift in Sources */,
 			);
@@ -422,6 +435,7 @@
 				F4ED8A2126B80123004E7307 /* NavigatorView.swift in Sources */,
 				F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542426AA0A2F00A757FB /* Graphic.swift in Sources */,
+				F428FBB726BD99A400C07179 /* InspectorView.swift in Sources */,
 				F44D541126AA040000A757FB /* ContentView.swift in Sources */,
 				F4536CC826B907A400FCD6BA /* SelectionView.swift in Sources */,
 			);
