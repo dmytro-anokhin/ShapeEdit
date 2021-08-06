@@ -16,10 +16,11 @@ struct NavigatorView: View {
 
     var body: some View {
         List(selection: $selection) {
-            OutlineGroup(graphics, children: \.children) {
-                GraphicRow($0)
+            Section(header: Text("Canvas")) {
+                OutlineGroup(graphics, children: \.children) {
+                    GraphicRow($0)
+                }
             }
-
         }
         .listStyle(.sidebar)
     }
