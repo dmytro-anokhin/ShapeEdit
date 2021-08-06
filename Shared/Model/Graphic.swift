@@ -19,7 +19,9 @@ struct Graphic: Hashable, Codable, Identifiable {
 
     var children: [Graphic]?
 
-    var fill: Fill
+    var fill: Fill?
+
+    var stroke: Stroke?
 
     var offset: CGPoint = .zero
     var size: CGSize = .zero
@@ -63,6 +65,21 @@ extension Graphic {
 
         case yellow
     }
+
+    enum Stroke: Equatable, Codable {
+
+        case red
+
+        case green
+
+        case blue
+
+        case cyan
+
+        case magenta
+
+        case yellow
+    }
 }
 
 
@@ -79,6 +96,7 @@ extension Graphic {
                                 content: .rect,
                                 children: nil,
                                 fill: .red,
+                                stroke: nil,
                                 offset: CGPoint(x: 425.0, y: 125.0),
                                 size: CGSize(width: 50.0, height: 50.0)),
                         Graphic(id: UUID().uuidString,
@@ -86,6 +104,7 @@ extension Graphic {
                                 content: .triangle,
                                 children: nil,
                                 fill: .green,
+                                stroke: nil,
                                 offset: CGPoint(x: 450.0, y: 110.0),
                                 size: CGSize(width: 50.0, height: 50.0)),
                         Graphic(id: UUID().uuidString,
@@ -93,6 +112,7 @@ extension Graphic {
                                 content: .ellipse,
                                 children: nil,
                                 fill: .blue,
+                                stroke: nil,
                                 offset: CGPoint(x: 400.0, y: 100.0),
                                 size: CGSize(width: 50.0, height: 50.0))
                     ],
@@ -104,6 +124,7 @@ extension Graphic {
                     content: .triangle,
                     children: nil,
                     fill: .magenta,
+                    stroke: nil,
                     offset: CGPoint(x: 550.0, y: 200.0),
                     size: CGSize(width: 300.0, height: 200.0)),
             Graphic(id: UUID().uuidString,
@@ -111,6 +132,7 @@ extension Graphic {
                     content: .ellipse,
                     children: nil,
                     fill: .yellow,
+                    stroke: nil,
                     offset: CGPoint(x: 300.0, y: 300.0),
                     size: CGSize(width: 250.0, height: 250.0))
         ]

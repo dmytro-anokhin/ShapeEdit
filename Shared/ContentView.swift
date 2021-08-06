@@ -27,7 +27,7 @@ struct ContentView: View {
                 Button {
                     isLibraryPresented.toggle()
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "square.on.circle")
                 }
                 .popover(isPresented: $isLibraryPresented) {
                     LibraryView(document: $document)

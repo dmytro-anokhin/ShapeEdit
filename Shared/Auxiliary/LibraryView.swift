@@ -26,7 +26,8 @@ struct LibraryView: View {
                               name: "Rectangle",
                               content: .rect,
                               children: nil,
-                              fill: .red,
+                              fill: .cyan,
+                              stroke: .red,
                               offset: .zero,
                               size: LibraryView.graphicSize)),
 
@@ -35,7 +36,8 @@ struct LibraryView: View {
                               name: "Triangle",
                               content: .triangle,
                               children: nil,
-                              fill: .green,
+                              fill: .magenta,
+                              stroke: .green,
                               offset: .zero,
                               size: LibraryView.graphicSize)),
 
@@ -44,7 +46,8 @@ struct LibraryView: View {
                               name: "Ellipse",
                               content: .ellipse,
                               children: nil,
-                              fill: .blue,
+                              fill: .yellow,
+                              stroke: .blue,
                               offset: .zero,
                               size: LibraryView.graphicSize))
     ]

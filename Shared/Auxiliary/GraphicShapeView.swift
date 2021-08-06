@@ -14,16 +14,43 @@ struct GraphicShapeView: View {
     var body: some View {
         switch graphic.content {
             case .rect:
-                Rectangle()
-                    .fill(graphic.fill.color)
+                ZStack {
+                    if let fill = graphic.fill {
+                        Rectangle()
+                            .fill(fill.color)
+                    }
+
+                    if let stroke = graphic.stroke {
+                        Rectangle()
+                            .stroke(stroke.color)
+                    }
+                }
 
             case .triangle:
-                Triangle()
-                    .fill(graphic.fill.color)
+                ZStack {
+                    if let fill = graphic.fill {
+                        Triangle()
+                            .fill(fill.color)
+                    }
+
+                    if let stroke = graphic.stroke {
+                        Triangle()
+                            .stroke(stroke.color)
+                    }
+                }
 
             case .ellipse:
-                Ellipse()
-                    .fill(graphic.fill.color)
+                ZStack {
+                    if let fill = graphic.fill {
+                        Ellipse()
+                            .fill(fill.color)
+                    }
+
+                    if let stroke = graphic.stroke {
+                        Ellipse()
+                            .stroke(stroke.color)
+                    }
+                }
         }
     }
 }
