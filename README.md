@@ -10,7 +10,7 @@ ShapeEdit contains some shapes that can be interacted with on a fixed size canva
 - On macOS scroll view will autoscroll to follow the coursor;
 - Zoom in/out.
 
-I'm working on improving interactions and adding features to make it more or less working vector editing tool.
+Note: this is just a prototype. I'm working on improving interactions and adding features to make it more or less working vector editing tool.
 
 ![ShapeEdit](https://user-images.githubusercontent.com/5136301/128566281-360b1e10-2ff0-42f0-b879-03e60b01997a.png)
 
