@@ -27,7 +27,7 @@ struct LibraryView: View {
                               content: .rect,
                               children: nil,
                               fill: .cyan,
-                              stroke: .red,
+                              stroke: Graphic.Stroke(style: .red, lineWidth: 2.0),
                               offset: .zero,
                               size: LibraryView.graphicSize)),
 
@@ -37,7 +37,7 @@ struct LibraryView: View {
                               content: .triangle,
                               children: nil,
                               fill: .magenta,
-                              stroke: .green,
+                              stroke: Graphic.Stroke(style: .green, lineWidth: 2.0),
                               offset: .zero,
                               size: LibraryView.graphicSize)),
 
@@ -47,7 +47,7 @@ struct LibraryView: View {
                               content: .ellipse,
                               children: nil,
                               fill: .yellow,
-                              stroke: .blue,
+                              stroke: Graphic.Stroke(style: .blue, lineWidth: 2.0),
                               offset: .zero,
                               size: LibraryView.graphicSize))
     ]

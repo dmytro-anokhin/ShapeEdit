@@ -40,27 +40,7 @@ extension Graphic {
     }
 }
 
-extension Graphic.Fill {
-
-    var color: Color {
-        switch self {
-            case .red:
-                return Color(.displayP3, red: 1.0, green: 0.0, blue: 0.0, opacity: 1.0)
-            case .green:
-                return Color(.displayP3, red: 0.0, green: 1.0, blue: 0.0, opacity: 1.0)
-            case .blue:
-                return Color(.displayP3, red: 0.0, green: 0.0, blue: 1.0, opacity: 1.0)
-            case .cyan:
-                return Color(.displayP3, red: 0.0, green: 1.0, blue: 1.0, opacity: 1.0)
-            case .magenta:
-                return Color(.displayP3, red: 1.0, green: 0.0, blue: 1.0, opacity: 1.0)
-            case .yellow:
-                return Color(.displayP3, red: 1.0, green: 1.0, blue: 0.0, opacity: 1.0)
-        }
-    }
-}
-
-extension Graphic.Stroke {
+extension Graphic.Style {
 
     var color: Color {
         switch self {

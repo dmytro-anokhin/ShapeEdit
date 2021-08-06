@@ -20,9 +20,9 @@ struct GraphicShapeView: View {
                             .fill(fill.color)
                     }
 
-                    if let stroke = graphic.stroke {
+                    if let stroke = graphic.stroke, stroke.lineWidth > 0.0 {
                         Rectangle()
-                            .stroke(stroke.color)
+                            .stroke(stroke.style.color, lineWidth: stroke.lineWidth)
                     }
                 }
 
@@ -33,9 +33,9 @@ struct GraphicShapeView: View {
                             .fill(fill.color)
                     }
 
-                    if let stroke = graphic.stroke {
+                    if let stroke = graphic.stroke, stroke.lineWidth > 0.0 {
                         Triangle()
-                            .stroke(stroke.color)
+                            .stroke(stroke.style.color, lineWidth: stroke.lineWidth)
                     }
                 }
 
@@ -46,9 +46,9 @@ struct GraphicShapeView: View {
                             .fill(fill.color)
                     }
 
-                    if let stroke = graphic.stroke {
+                    if let stroke = graphic.stroke, stroke.lineWidth > 0.0 {
                         Ellipse()
-                            .stroke(stroke.color)
+                            .stroke(stroke.style.color, lineWidth: stroke.lineWidth)
                     }
                 }
         }

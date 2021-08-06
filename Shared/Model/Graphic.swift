@@ -19,9 +19,9 @@ struct Graphic: Hashable, Codable, Identifiable {
 
     var children: [Graphic]?
 
-    var fill: Fill?
+    var fill: Style?
 
-    var stroke: Stroke?
+    var stroke: Graphic.Stroke?
 
     var offset: CGPoint = .zero
     var size: CGSize = .zero
@@ -51,22 +51,14 @@ extension Graphic {
 
 extension Graphic {
 
-    enum Fill: Equatable, Codable {
+    struct Stroke: Equatable, Codable {
 
-        case red
+        var style: Style
 
-        case green
-
-        case blue
-
-        case cyan
-
-        case magenta
-
-        case yellow
+        var lineWidth: CGFloat
     }
 
-    enum Stroke: Equatable, Codable {
+    enum Style: Equatable, Codable {
 
         case red
 
