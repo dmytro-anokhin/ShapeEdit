@@ -16,15 +16,8 @@ struct InspectorView: View {
     var body: some View {
         ScrollView {
             Form {
-                VStack(alignment: .leading) {
-                    Text("Fill:")
-                    ColorRowView(selected: $fillColor)
-                }
-
-                VStack(alignment: .leading) {
-                    Text("Stroke:")
-                    ColorRowView(selected: $strokeColor)
-                }
+                ColorRowView(title: "Fill Color:", selected: $state.fill)
+                ColorRowView(title: "Stroke Color:", selected: $state.strokeColor)
             }
             .padding(.all)
         }
@@ -35,45 +28,73 @@ struct InspectorView: View {
 
             if selected.count == 1 {
                 let graphic = selected.first!
-                fillColor = graphic.fill
-                strokeColor = graphic.stroke?.style
-                strokeLineWidth = graphic.stroke?.lineWidth
+                state.update(graphic)
             } else {
-                fillColor = nil
-                strokeColor = nil
-                strokeLineWidth = nil
+                state.update(nil)
             }
         }
-        .onChange(of: fillColor) { newValue in
-            updateBindings()
-        }
-        .onChange(of: strokeColor) { newValue in
-            updateBindings()
-        }
-        .onChange(of: strokeLineWidth) { newValue in
+        .onReceive(state.objectWillChange) {
+            guard !state.isUpdating else {
+                return
+            }
+
             updateBindings()
         }
     }
 
-    @State private var fillColor: Graphic.PaletteColor?
-
-    @State private var strokeColor: Graphic.PaletteColor?
-
-    @State private var strokeLineWidth: CGFloat? = 1.0
+    @StateObject private var state = InspectorModel()
 
     private func updateBindings() {
         for id in selection {
             graphics.update(id) { graphic in
-                graphic.fill = fillColor
-
-                if let strokeColor = strokeColor, let lineWidth = strokeLineWidth {
-                    graphic.stroke = .init(style: strokeColor, lineWidth: lineWidth)
-                } else {
-                    graphic.stroke = nil
-                }
+                graphic.fill = state.fill
+                graphic.stroke = state.stroke
             }
         }
     }
+}
+
+final class InspectorModel: ObservableObject {
+
+    @Published var fill: Graphic.PaletteColor?
+
+    @Published var strokeColor: Graphic.PaletteColor?
+
+    @Published var strokeLineWidth: CGFloat = 1.0
+
+    var stroke: Graphic.Stroke? {
+        get {
+            if let strokeColor = strokeColor {
+                return .init(style: strokeColor, lineWidth: strokeLineWidth)
+            } else {
+                return nil
+            }
+        }
+
+        set {
+            strokeColor = newValue?.style
+            strokeLineWidth = newValue?.lineWidth ?? 1.0
+        }
+    }
+
+    init() {
+        fill = nil
+        strokeColor = nil
+    }
+
+    func update(_ graphic: Graphic?) {
+        isUpdating = true
+
+        fill = graphic?.fill
+        stroke = graphic?.stroke
+
+        DispatchQueue.main.async {
+            self.isUpdating = false
+        }
+    }
+
+    /// Calling `update(_:)` method sets this flag and resets asynchronously on the main queue after publishing update. This prevents client code from setting style on a same graphic object. And in particular, resetting styles when multiple graphic object selected.
+    var isUpdating: Bool = false
 }
 
 
@@ -98,6 +119,8 @@ struct ColorRowView: View {
         var paletteColor: Graphic.PaletteColor?
     }
 
+    var title: String
+
     @Binding var selected: Graphic.PaletteColor?
 
     var body: some View {
@@ -107,34 +130,37 @@ struct ColorRowView: View {
 
         let items = Graphic.PaletteColor.allCases.map { Item(paletteColor: $0) } + [ Item(paletteColor: nil) ]
 
-        return LazyVGrid(columns: columns) {
-            ForEach(items) { item in
-                ZStack {
-                    Rectangle()
-                        .fill(selected == item.paletteColor ? Color.blue : Color.clear)
-                        .cornerRadius(ColorRowView.cornerRadius)
-                        .aspectRatio(1.0, contentMode: .fit)
-                        .frame(width: ColorRowView.selectionSize.width,
-                               height: ColorRowView.selectionSize.height)
+        VStack(alignment: .leading) {
+            Text(title)
+            LazyVGrid(columns: columns) {
+                ForEach(items) { item in
+                    ZStack {
+                        Rectangle()
+                            .fill(selected == item.paletteColor ? Color.blue : Color.clear)
+                            .cornerRadius(ColorRowView.cornerRadius)
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .frame(width: ColorRowView.selectionSize.width,
+                                   height: ColorRowView.selectionSize.height)
 
-                    if let paletteColor = item.paletteColor {
-                        Circle()
-                            .fill(paletteColor.color)
-                            .aspectRatio(1.0, contentMode: .fit)
-                            .frame(width: ColorRowView.itemSize.width,
-                                   height: ColorRowView.itemSize.height)
-                    } else {
-                        Image(systemName: "slash.circle")
-                            .resizable()
-                            .font(Font.title.weight(.light))
-                            .foregroundColor(.gray)
-                            .aspectRatio(1.0, contentMode: .fit)
-                            .frame(width: ColorRowView.itemSize.width,
-                                   height: ColorRowView.itemSize.height)
+                        if let paletteColor = item.paletteColor {
+                            Circle()
+                                .fill(paletteColor.color)
+                                .aspectRatio(1.0, contentMode: .fit)
+                                .frame(width: ColorRowView.itemSize.width,
+                                       height: ColorRowView.itemSize.height)
+                        } else {
+                            Image(systemName: "slash.circle")
+                                .resizable()
+                                .font(Font.title.weight(.light))
+                                .foregroundColor(.gray)
+                                .aspectRatio(1.0, contentMode: .fit)
+                                .frame(width: ColorRowView.itemSize.width,
+                                       height: ColorRowView.itemSize.height)
+                        }
                     }
-                }
-                .onTapGesture {
-                    selected = item.paletteColor
+                    .onTapGesture {
+                        selected = item.paletteColor
+                    }
                 }
             }
         }
