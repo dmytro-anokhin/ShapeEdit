@@ -42,6 +42,18 @@ struct ContentView: View {
         }
         #else
         CanvasView(graphics: $document.graphics, selection: $selection)
+            .toolbar {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    Button {
+                        isLibraryPresented.toggle()
+                    } label: {
+                        Image(systemName: "square.on.circle")
+                    }
+                    .popover(isPresented: $isLibraryPresented) {
+                        LibraryView(document: $document)
+                    }
+                }
+            }
         #endif
     }
 }
