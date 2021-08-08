@@ -57,6 +57,6 @@ struct GraphicShapeView: View {
 
 struct GraphicShapeView_Previews: PreviewProvider {
     static var previews: some View {
-        GraphicShapeView(graphic: Graphic.test.first!)
+        GraphicShapeView(graphic: Graphic.smallSet.first!)
     }
 }

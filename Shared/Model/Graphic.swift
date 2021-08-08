@@ -39,7 +39,7 @@ struct Graphic: Hashable, Codable, Identifiable {
 
 extension Graphic {
 
-    enum Content: Equatable, Codable {
+    enum Content: Equatable, Codable, CaseIterable {
 
         case rect
 
@@ -92,62 +92,5 @@ extension Graphic {
                     return Color(.displayP3, red: 247.0 / 255.0, green: 241.0 / 255.0, blue: 80.0 / 255.0, opacity: 1.0)
             }
         }
-    }
-}
-
-
-extension Graphic {
-
-    static var test: [Graphic] {
-        [
-            Graphic(id: UUID().uuidString,
-                    name: "Rectangle",
-                    content: .rect,
-                    children: [
-                        Graphic(id: UUID().uuidString,
-                                name: "Rectangle",
-                                content: .rect,
-                                children: nil,
-                                fill: .red,
-                                stroke: nil,
-                                offset: CGPoint(x: 425.0, y: 125.0),
-                                size: CGSize(width: 50.0, height: 50.0)),
-                        Graphic(id: UUID().uuidString,
-                                name: "Triangle",
-                                content: .triangle,
-                                children: nil,
-                                fill: .green,
-                                stroke: nil,
-                                offset: CGPoint(x: 450.0, y: 110.0),
-                                size: CGSize(width: 50.0, height: 50.0)),
-                        Graphic(id: UUID().uuidString,
-                                name: "Ellipse",
-                                content: .ellipse,
-                                children: nil,
-                                fill: .blue,
-                                stroke: nil,
-                                offset: CGPoint(x: 400.0, y: 100.0),
-                                size: CGSize(width: 50.0, height: 50.0))
-                    ],
-                    fill: .cyan,
-                    offset: CGPoint(x: 400.0, y: 100.0),
-                    size: CGSize(width: 200.0, height: 200.0)),
-            Graphic(id: UUID().uuidString,
-                    name: "Triangle",
-                    content: .triangle,
-                    children: nil,
-                    fill: .magenta,
-                    stroke: nil,
-                    offset: CGPoint(x: 550.0, y: 200.0),
-                    size: CGSize(width: 300.0, height: 200.0)),
-            Graphic(id: UUID().uuidString,
-                    name: "Ellipse",
-                    content: .ellipse,
-                    children: nil,
-                    fill: .yellow,
-                    stroke: nil,
-                    offset: CGPoint(x: 300.0, y: 300.0),
-                    size: CGSize(width: 250.0, height: 250.0))
-        ]
     }
 }

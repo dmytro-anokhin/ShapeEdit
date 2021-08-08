@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F41779E926BFA69000C43EBF /* Graphic+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41779E826BFA69000C43EBF /* Graphic+Test.swift */; };
+		F41779EA26BFA69000C43EBF /* Graphic+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41779E826BFA69000C43EBF /* Graphic+Test.swift */; };
 		F428FBB626BD99A300C07179 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428FBB526BD99A300C07179 /* InspectorView.swift */; };
 		F428FBB726BD99A400C07179 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428FBB526BD99A300C07179 /* InspectorView.swift */; };
 		F42E979426BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
@@ -59,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F41779E826BFA69000C43EBF /* Graphic+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Graphic+Test.swift"; sourceTree = "<group>"; };
 		F428FBB526BD99A300C07179 /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
 		F42E979326BC43FC001C37C2 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditApp.swift; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 			children = (
 				F44D53E326AA03FE00A757FB /* ShapeEditDocument.swift */,
 				F44D542226AA0A2E00A757FB /* Graphic.swift */,
+				F41779E826BFA69000C43EBF /* Graphic+Test.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -415,6 +419,7 @@
 				F4ED8A2026B80123004E7307 /* NavigatorView.swift in Sources */,
 				F44D542A26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542326AA0A2F00A757FB /* Graphic.swift in Sources */,
+				F41779E926BFA69000C43EBF /* Graphic+Test.swift in Sources */,
 				F428FBB626BD99A300C07179 /* InspectorView.swift in Sources */,
 				F44D541026AA040000A757FB /* ContentView.swift in Sources */,
 				F4536CC726B907A400FCD6BA /* SelectionView.swift in Sources */,
@@ -435,6 +440,7 @@
 				F4ED8A2126B80123004E7307 /* NavigatorView.swift in Sources */,
 				F44D542B26AA95FE00A757FB /* CanvasView.swift in Sources */,
 				F44D542426AA0A2F00A757FB /* Graphic.swift in Sources */,
+				F41779EA26BFA69000C43EBF /* Graphic+Test.swift in Sources */,
 				F428FBB726BD99A400C07179 /* InspectorView.swift in Sources */,
 				F44D541126AA040000A757FB /* ContentView.swift in Sources */,
 				F4536CC826B907A400FCD6BA /* SelectionView.swift in Sources */,

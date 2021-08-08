@@ -41,7 +41,7 @@ extension NavigatorView {
             HStack {
                 GraphicShapeView(graphic: graphic)
                     .aspectRatio(1.0, contentMode: .fit)
-                    .frame(maxHeight: 17.0)
+                    .frame(height: 17.0)
                 Text(graphic.name)
             }.padding(.leading, 8.0)
         }
@@ -51,6 +51,6 @@ extension NavigatorView {
 
 struct NavigatorView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigatorView(graphics: Graphic.test, selection: .constant([]))
+        NavigatorView(graphics: Graphic.smallSet, selection: .constant([]))
     }
 }

@@ -17,7 +17,7 @@ struct ShapeEditDocument: FileDocument, Codable {
 
     var graphics: [Graphic]
 
-    init(graphics: [Graphic] = Graphic.test) {
+    init(graphics: [Graphic] = Graphic.generateSample(length: 5, children: [2])) {
         self.graphics = graphics
     }
 
