@@ -64,8 +64,10 @@ extension Sequence where Element == Graphic {
     }
 }
 
+// Operations on a tree of graphics. All operations are linear time O(n).
 extension Array where Element == Graphic {
 
+    /// Update element that matches id
     mutating func update(_ id: String, change: (_ graphic: inout Graphic) -> Void) {
         guard let index = firstIndex(where: { $0.id == id }) else {
             var counter = count
@@ -90,6 +92,35 @@ extension Array where Element == Graphic {
         self[index] = element
     }
 
+    /// Remove graphic
+    mutating func remove(_ graphic: Graphic) {
+        remove(graphic.id)
+    }
+
+    /// Remove element with id
+    mutating func remove(_ id: String) {
+        guard let index = firstIndex(where: { $0.id == id }) else {
+            var counter = count
+
+            while counter > 0 {
+                var element = removeFirst()
+
+                if var children = element.children {
+                    children.remove(id)
+                    element.children = children.isEmpty ? nil : children
+                }
+
+                append(element)
+                counter -= 1
+            }
+
+            return
+        }
+
+        remove(at: index)
+    }
+
+    /// Find first element that matches predicate
     func recursiveFirst(where predicate: (_ graphic: Graphic) -> Bool) -> Graphic? {
         var queue: [Graphic] = self
 
@@ -106,6 +137,7 @@ extension Array where Element == Graphic {
         return nil
     }
 
+    /// Filter elements by predicate and returns flattened array of results
     func recursiveFilter(_ isIncluded: (Graphic) throws -> Bool) rethrows -> [Graphic] {
         var result: [Graphic] = []
         var queue: [Graphic] = self
@@ -125,6 +157,7 @@ extension Array where Element == Graphic {
         return result
     }
 
+    /// Flatten tree in an array
     var flatten: [Graphic] {
         var result: [Graphic] = []
         var queue: [Graphic] = self

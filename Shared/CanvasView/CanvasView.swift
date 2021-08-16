@@ -128,6 +128,13 @@ struct CanvasView: View {
     @ViewBuilder func makeTreeView(root: Graphic) -> some View {
         ForEach(root.flatten) { node in
             makeView(node)
+                .contextMenu {
+                    Button {
+                        graphics.remove(node)
+                    } label: {
+                        Text("Delete")
+                    }
+                }
         }
     }
 
