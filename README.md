@@ -8,10 +8,10 @@ ShapeEdit contains some shapes that can be interacted with on a fixed size canva
 - Create new shapes;
 - Change fill and stroke color;
 - On macOS scroll view will autoscroll to follow the coursor;
-- Zoom in/out.
+- Zoom in/out;
+- Delete elements from a context menu.
 
-Note: this is just a prototype. I'm working on improving interactions and adding features to make it more or less working vector editing tool.
+Note: this is just a prototype, it's not optimized for performance in any way and should be considered as a case study if you want to build something similar. You need Xcode 13 to run it.
 
 ![ShapeEdit](https://user-images.githubusercontent.com/5136301/128566281-360b1e10-2ff0-42f0-b879-03e60b01997a.png)
 
-You need Xcode 13 to run it.
