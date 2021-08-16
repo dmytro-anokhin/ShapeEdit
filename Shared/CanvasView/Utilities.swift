@@ -67,31 +67,6 @@ extension Sequence where Element == Graphic {
 // Operations on a tree of graphics. All operations are linear time O(n).
 extension Array where Element == Graphic {
 
-    /// Update element that matches id
-    mutating func update(_ id: String, change: (_ graphic: inout Graphic) -> Void) {
-        guard let index = firstIndex(where: { $0.id == id }) else {
-            var counter = count
-
-            while counter > 0 {
-                var element = removeFirst()
-
-                if var children = element.children {
-                    children.update(id, change: change)
-                    element.children = children
-                }
-
-                append(element)
-                counter -= 1
-            }
-
-            return
-        }
-
-        var element = self[index]
-        change(&element)
-        self[index] = element
-    }
-
     /// Remove graphic
     mutating func remove(_ graphic: Graphic) {
         remove(graphic.id)

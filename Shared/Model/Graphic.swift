@@ -9,7 +9,7 @@ import SwiftUI
 import Foundation
 
 
-struct Graphic: Hashable, Codable, Identifiable {
+struct Graphic: TreeNode, Hashable, Codable, Identifiable {
 
     var id: String
 
