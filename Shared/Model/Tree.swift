@@ -15,6 +15,8 @@ protocol TreeNode {
 
 extension Array where Element: TreeNode, Element: Identifiable, Element.Child == Element {
 
+    // MARK: - Update
+
     /// Updates the node that matches the id
     ///
     /// - Parameters:
@@ -44,5 +46,52 @@ extension Array where Element: TreeNode, Element: Identifiable, Element.Child ==
         }
 
         return false
+    }
+
+    // MARK: - Remove
+
+    /// Remove the node from the tree
+    ///
+    /// - Parameters:
+    ///     - node: The node to remove.
+    ///
+    /// This is recursive operation in O(n) time.
+    mutating func remove(_ node: Element) {
+        remove(node.id)
+    }
+
+    /// Remove the node from the tree
+    ///
+    /// - Parameters:
+    ///     - id: The id of the node to remove.
+    ///
+    /// This is recursive operation in O(n) time.
+    mutating func remove(_ id: Element.ID) {
+        _remove(id)
+    }
+
+    /// Helper for `remove` that returns `true` if the node that matches given id was removed.
+    @discardableResult
+    private mutating func _remove(_ id: Element.ID) -> Bool {
+        var indexToRemove: Int?
+
+        for index in 0..<count {
+            var element = self[index]
+
+            if element.id == id {
+                indexToRemove = index
+            } else if var children = element.children, children._remove(id) {
+                element.children = children
+                self[index] = element
+                return true
+            }
+        }
+
+        guard let indexToRemove = indexToRemove else {
+            return false
+        }
+
+        remove(at: indexToRemove)
+        return true
     }
 }
