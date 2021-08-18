@@ -13,6 +13,8 @@
 		F428FBB726BD99A400C07179 /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428FBB526BD99A300C07179 /* InspectorView.swift */; };
 		F42E979426BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
 		F42E979526BC43FC001C37C2 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E979326BC43FC001C37C2 /* LibraryView.swift */; };
+		F44A417126CD8365007EF5B6 /* ColorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44A417026CD8365007EF5B6 /* ColorRowView.swift */; };
+		F44A417226CD8365007EF5B6 /* ColorRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44A417026CD8365007EF5B6 /* ColorRowView.swift */; };
 		F44D53FF26AA040000A757FB /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D53FE26AA040000A757FB /* Tests_iOS.swift */; };
 		F44D540A26AA040000A757FB /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D540926AA040000A757FB /* Tests_macOS.swift */; };
 		F44D540C26AA040000A757FB /* ShapeEditApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */; };
@@ -66,6 +68,7 @@
 		F41779E826BFA69000C43EBF /* Graphic+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Graphic+Test.swift"; sourceTree = "<group>"; };
 		F428FBB526BD99A300C07179 /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
 		F42E979326BC43FC001C37C2 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		F44A417026CD8365007EF5B6 /* ColorRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRowView.swift; sourceTree = "<group>"; };
 		F44D53E226AA03FE00A757FB /* ShapeEditApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditApp.swift; sourceTree = "<group>"; };
 		F44D53E326AA03FE00A757FB /* ShapeEditDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeEditDocument.swift; sourceTree = "<group>"; };
 		F44D53E426AA03FE00A757FB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -130,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				F428FBB526BD99A300C07179 /* InspectorView.swift */,
+				F44A417026CD8365007EF5B6 /* ColorRowView.swift */,
 			);
 			path = Inspector;
 			sourceTree = "<group>";
@@ -428,6 +432,7 @@
 				F428FBB626BD99A300C07179 /* InspectorView.swift in Sources */,
 				F44D541026AA040000A757FB /* ContentView.swift in Sources */,
 				F4536CC726B907A400FCD6BA /* SelectionView.swift in Sources */,
+				F44A417126CD8365007EF5B6 /* ColorRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +455,7 @@
 				F428FBB726BD99A400C07179 /* InspectorView.swift in Sources */,
 				F44D541126AA040000A757FB /* ContentView.swift in Sources */,
 				F4536CC826B907A400FCD6BA /* SelectionView.swift in Sources */,
+				F44A417226CD8365007EF5B6 /* ColorRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
