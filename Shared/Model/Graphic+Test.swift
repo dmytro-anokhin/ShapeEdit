@@ -82,9 +82,17 @@ extension Graphic {
             }
 
             let uuidString = UUID().uuidString
+            let content = Graphic.Content.allCases.randomElement()!
 
-            let size = CGSize(width: CGFloat.random(in: minSize.width...maxSize.width),
-                              height: CGFloat.random(in: minSize.height...maxSize.height))
+            var size: CGSize = CGSize(width: CGFloat.random(in: minSize.width...maxSize.width),
+                                      height: CGFloat.random(in: minSize.height...maxSize.height))
+
+            switch content {
+                case .ellipse:
+                    size.width = size.height
+                default:
+                    break
+            }
 
             var offset = CGPoint(x: CGFloat.random(in: minOffset.x...maxOffset.x),
                                  y: CGFloat.random(in: minOffset.y...maxOffset.y))
@@ -92,19 +100,19 @@ extension Graphic {
             offset.x = min(offset.x, maxOffset.x - size.width)
             offset.y = min(offset.y, maxOffset.y - size.height)
 
-            let stroke: Graphic.Stroke?
+            let stroke: Graphic.Stroke? = nil
 
-            if Bool.random() {
-                let color = Graphic.PaletteColor.allCases.randomElement()!
-                let lineWidth = CGFloat.random(in: 4.0...16.0)
-                stroke = Graphic.Stroke(style: color, lineWidth: lineWidth)
-            } else {
-                stroke = nil
-            }
+//            if Bool.random() {
+//                let color = Graphic.PaletteColor.allCases.randomElement()!
+//                let lineWidth = CGFloat.random(in: 4.0...16.0)
+//                stroke = Graphic.Stroke(style: color, lineWidth: lineWidth)
+//            } else {
+//                stroke = nil
+//            }
 
             let graphic = Graphic(id: uuidString,
                                   name: uuidString,
-                                  content: Graphic.Content.allCases.randomElement()!,
+                                  content: content,
                                   children: children,
                                   fill: Graphic.PaletteColor.allCases.randomElement()!,
                                   stroke: stroke,
