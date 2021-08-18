@@ -64,32 +64,29 @@ struct LibraryView: View {
             GridItem(.flexible(minimum: minWidth, maximum: .infinity))
         ]
 
-        return
-            ScrollView {
-                LazyVGrid(columns: columns) {
-                    Section(header: Text("Library")) {
-                        ForEach(items) { item in
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color(.displayP3, white: 1.0, opacity: 0.1))
-                                    .cornerRadius(10.0)
-                                    .aspectRatio(1.0, contentMode: .fit)
+        LazyVGrid(columns: columns) {
+            Section(header: Text("Library")) {
+                ForEach(items) { item in
+                    ZStack {
+                        Rectangle()
+                            .fill(Color(.displayP3, white: 1.0, opacity: 0.1))
+                            .cornerRadius(10.0)
+                            .aspectRatio(1.0, contentMode: .fit)
 
-                                GraphicShapeView(graphic: item.graphic)
-                                    .aspectRatio(1.0, contentMode: .fit)
-                                    .padding(LibraryView.itemPadding)
-                            }
-                            .onTapGesture {
-                                var graphic = item.graphic
-                                graphic.id = UUID().uuidString
-                                graphic.size = CGSize(width: 100.0, height: 100.0)
-                                document.graphics.append(graphic)
-                            }
-                        }
+                        GraphicShapeView(graphic: item.graphic)
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .padding(LibraryView.itemPadding)
+                    }
+                    .onTapGesture {
+                        var graphic = item.graphic
+                        graphic.id = UUID().uuidString
+                        graphic.size = CGSize(width: 100.0, height: 100.0)
+                        document.graphics.append(graphic)
                     }
                 }
-                .padding(.all)
             }
+        }
+        .padding(.all)
     }
 }
 
