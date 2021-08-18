@@ -67,43 +67,6 @@ extension Sequence where Element == Graphic {
 // Operations on a tree of graphics. All operations are linear time O(n).
 extension Array where Element == Graphic {
 
-    /// Find first element that matches predicate
-    func recursiveFirst(where predicate: (_ graphic: Graphic) -> Bool) -> Graphic? {
-        var queue: [Graphic] = self
-
-        while !queue.isEmpty {
-            let graphic = queue.removeFirst()
-
-            if predicate(graphic) {
-                return graphic
-            } else if let children = graphic.children {
-                queue.append(contentsOf: children)
-            }
-        }
-
-        return nil
-    }
-
-    /// Filter elements by predicate and returns flattened array of results
-    func recursiveFilter(_ isIncluded: (Graphic) throws -> Bool) rethrows -> [Graphic] {
-        var result: [Graphic] = []
-        var queue: [Graphic] = self
-
-        while !queue.isEmpty {
-            let graphic = queue.removeFirst()
-
-            if try isIncluded(graphic) {
-                result.append(graphic)
-            }
-
-            if let children = graphic.children {
-                queue.append(contentsOf: children)
-            }
-        }
-
-        return result
-    }
-
     /// Flatten tree in an array
     var flatten: [Graphic] {
         var result: [Graphic] = []

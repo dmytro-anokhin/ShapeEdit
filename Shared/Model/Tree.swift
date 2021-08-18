@@ -94,4 +94,37 @@ extension Array where Element: TreeNode, Element: Identifiable, Element.Child ==
         remove(at: indexToRemove)
         return true
     }
+
+    // MARK: -
+
+    func recursiveFilter(_ isIncluded: (Element) throws -> Bool) rethrows -> [Element] {
+        try filter { element in
+            if try isIncluded(element) {
+                return true
+            }
+
+            if let filteredChildren = try element.children?.recursiveFilter(isIncluded) {
+                return !filteredChildren.isEmpty
+            }
+
+            return false
+        }
+    }
+//
+//    /// Flatten tree in an array
+//    func flatten() -> [Element] {
+//        var result: [Element] = []
+//        var queue: [Element] = self
+//
+//        while !queue.isEmpty {
+//            let element = queue.removeFirst()
+//            result.append(element)
+//
+//            if let children = element.children {
+//                queue.append(contentsOf: children)
+//            }
+//        }
+//
+//        return result
+//    }
 }

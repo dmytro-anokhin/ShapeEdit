@@ -41,7 +41,7 @@ struct CanvasView: View {
                     let selected = graphics.recursiveFilter {
                         selection.contains($0.id)
                             && $0.hitTest(location, includeChildren: false, extendBy: SelectionProxy.radius) != nil
-                    }
+                    }.flatten
 
                     return !selected.isEmpty
 
@@ -55,7 +55,7 @@ struct CanvasView: View {
                     let selected = graphics.recursiveFilter {
                         selection.contains($0.id)
                             && $0.hitTest(location, includeChildren: false, extendBy: SelectionProxy.radius) != nil
-                    }
+                    }.flatten
 
                     for graphic in selected {
                         let selectionProxy = SelectionProxy(graphic: graphic)
