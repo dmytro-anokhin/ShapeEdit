@@ -15,9 +15,15 @@ struct InspectorView: View {
 
     var body: some View {
         ScrollView {
-            Form {
-                ColorRowView(title: "Fill Color:", selected: $state.fill)
-                ColorRowView(title: "Stroke Color:", selected: $state.strokeColor)
+            VStack(alignment: .leading) {
+                Section(header: Text("Fill:")) {
+                    ColorRowView(selected: $state.fill)
+                }
+
+                Section(header: Text("Stroke:")) {
+                    ColorRowView(selected: $state.strokeColor)
+                    LineWidthRowView(title: "Line Width:", value: $state.strokeLineWidth)
+                }
             }
             .padding(.all)
         }
@@ -64,7 +70,7 @@ final class InspectorModel: ObservableObject {
 
     var stroke: Graphic.Stroke? {
         get {
-            if let strokeColor = strokeColor {
+            if let strokeColor = strokeColor, strokeLineWidth > 0.0 {
                 return .init(style: strokeColor, lineWidth: strokeLineWidth)
             } else {
                 return nil
@@ -73,7 +79,7 @@ final class InspectorModel: ObservableObject {
 
         set {
             strokeColor = newValue?.style
-            strokeLineWidth = newValue?.lineWidth ?? 1.0
+            strokeLineWidth = newValue?.lineWidth ?? 0.0
         }
     }
 

@@ -28,8 +28,6 @@ struct ColorRowView: View {
         var paletteColor: Graphic.PaletteColor?
     }
 
-    var title: String
-
     @Binding var selected: Graphic.PaletteColor?
 
     var body: some View {
@@ -39,37 +37,34 @@ struct ColorRowView: View {
 
         let items = Graphic.PaletteColor.allCases.map { Item(paletteColor: $0) } + [ Item(paletteColor: nil) ]
 
-        VStack(alignment: .leading) {
-            Text(title)
-            LazyVGrid(columns: columns) {
-                ForEach(items) { item in
-                    ZStack {
-                        Rectangle()
-                            .fill(selected == item.paletteColor ? Color.blue : Color.clear)
-                            .cornerRadius(ColorRowView.cornerRadius)
-                            .aspectRatio(1.0, contentMode: .fit)
-                            .frame(width: ColorRowView.selectionSize.width,
-                                   height: ColorRowView.selectionSize.height)
+        return LazyVGrid(columns: columns) {
+            ForEach(items) { item in
+                ZStack {
+                    Rectangle()
+                        .fill(selected == item.paletteColor ? Color.blue : Color.clear)
+                        .cornerRadius(ColorRowView.cornerRadius)
+                        .aspectRatio(1.0, contentMode: .fit)
+                        .frame(width: ColorRowView.selectionSize.width,
+                               height: ColorRowView.selectionSize.height)
 
-                        if let paletteColor = item.paletteColor {
-                            Circle()
-                                .fill(paletteColor.color)
-                                .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: ColorRowView.itemSize.width,
-                                       height: ColorRowView.itemSize.height)
-                        } else {
-                            Image(systemName: "slash.circle")
-                                .resizable()
-                                .font(Font.title.weight(.light))
-                                .foregroundColor(.gray)
-                                .aspectRatio(1.0, contentMode: .fit)
-                                .frame(width: ColorRowView.itemSize.width,
-                                       height: ColorRowView.itemSize.height)
-                        }
+                    if let paletteColor = item.paletteColor {
+                        Circle()
+                            .fill(paletteColor.color)
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .frame(width: ColorRowView.itemSize.width,
+                                   height: ColorRowView.itemSize.height)
+                    } else {
+                        Image(systemName: "slash.circle")
+                            .resizable()
+                            .font(Font.title.weight(.light))
+                            .foregroundColor(.gray)
+                            .aspectRatio(1.0, contentMode: .fit)
+                            .frame(width: ColorRowView.itemSize.width,
+                                   height: ColorRowView.itemSize.height)
                     }
-                    .onTapGesture {
-                        selected = item.paletteColor
-                    }
+                }
+                .onTapGesture {
+                    selected = item.paletteColor
                 }
             }
         }
@@ -78,6 +73,6 @@ struct ColorRowView: View {
 
 struct ColorRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ColorRowView(title: "Fill", selected: .constant(.cyan))
+        ColorRowView(selected: .constant(.cyan))
     }
 }
