@@ -100,15 +100,15 @@ extension Graphic {
             offset.x = min(offset.x, maxOffset.x - size.width)
             offset.y = min(offset.y, maxOffset.y - size.height)
 
-            let stroke: Graphic.Stroke? = nil
+            let stroke: Graphic.Stroke?
 
-//            if Bool.random() {
-//                let color = Graphic.PaletteColor.allCases.randomElement()!
-//                let lineWidth = CGFloat.random(in: 4.0...16.0)
-//                stroke = Graphic.Stroke(style: color, lineWidth: lineWidth)
-//            } else {
-//                stroke = nil
-//            }
+            if Int.random(in: 0..<4) == 0 {
+                let color = Graphic.PaletteColor.allCases.randomElement()!
+                let lineWidth = CGFloat.random(in: 1.0...10.0)
+                stroke = Graphic.Stroke(style: color, lineWidth: lineWidth)
+            } else {
+                stroke = nil
+            }
 
             let graphic = Graphic(id: uuidString,
                                   name: uuidString,
