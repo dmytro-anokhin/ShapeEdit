@@ -25,7 +25,6 @@ struct GridView: View {
                 .foregroundColor(Color(.displayP3, white: 0.25, opacity: 1.0))
         }
         .background(Color.white)
-        .drawingGroup()
     }
 
     func path(size: CGSize, length: CGFloat) -> Path {
